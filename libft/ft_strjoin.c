@@ -42,7 +42,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 	int		len;
-
+	
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		return ((char *)s2);
+	else if (!s2)
+		return ((char *)s1);
 	len = ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1;
 	str = (char *)malloc(sizeof(char) * len);
 	if (!str)

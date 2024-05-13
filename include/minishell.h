@@ -16,5 +16,7 @@
 #include <termios.h>  // Pour tcsetattr, tcgetattr
 #include <sys/ioctl.h> // Pour ioctl
 #include <term.h>     // Pour tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #endif
