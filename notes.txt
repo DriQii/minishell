@@ -1,0 +1,1 @@
+ctrl-D sans caractere segfault

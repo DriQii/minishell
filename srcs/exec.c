@@ -48,7 +48,7 @@ int main(void)
     char *line;
     char *tmp;
     int i;
-    
+
     while (1)
     {   
         
@@ -68,6 +68,7 @@ int main(void)
             line = ft_strdup(tmp);
         free(tmp);
         str = readline(line);
+        printf("str = %s\n", str);
         arg = ft_split(str, ' ');
         if (ft_strcmp(arg[0], "cd") == 0)
         {
