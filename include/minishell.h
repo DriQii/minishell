@@ -34,5 +34,6 @@ char	**ft_tb_realloc(char **tb);
 void	*ft_freetabtab(char **tb);
 char    **ft_receive_prompt(char *str);
 void	ft_printtabtab(char **tb);
+char    **ft_sort_token(char **tb);
 
 #endif

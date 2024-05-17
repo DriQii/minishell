@@ -18,7 +18,7 @@ int ft_change_agstate(arg_state cstate, arg_state *agstate)
 {
     if (*agstate == SEARCH && cstate != DSPACE)
     {
-        *agstate = cstate;
+        *agstate = FSPACE;
         return (1);
     }
     else if (*agstate == SEARCH && cstate == DSPACE)
@@ -57,6 +57,7 @@ char    **ft_receive_prompt(char *str)
     k = 0;
     agstate = SEARCH;
     args = NULL;
+    arg = NULL;
     while(str[i])
     {
         strstate = ft_change_agstate(ft_find_cstate(str[i], str[i + 1]), &agstate);
@@ -80,7 +81,6 @@ char    **ft_receive_prompt(char *str)
             j = 0;
         }
         i++;
-        
     }
     args = ft_tb_realloc(args);
     args[k] = ft_strdup(arg);
@@ -88,3 +88,46 @@ char    **ft_receive_prompt(char *str)
     arg = NULL;
     return (args);
 }
+
+char    *ft_join_space(char *s1, char *s2)
+{
+    char *newstr;
+    char sp[] = {" "};
+
+    if (!s1)
+        return (ft_strdup(s2));
+    newstr = ft_strjoin(s1, sp);
+    if (s1)
+        free(s1);
+    s1 = newstr;
+    newstr = ft_strjoin(newstr, s2);
+    if (s1)
+        free(s1);
+    return (newstr);
+}
+
+char    **ft_sort_token(char **tb)
+{
+    int i;
+    int j;
+    char    **tokens;
+
+    i = 0;
+    j = 0;
+    tokens = NULL;
+    tokens = ft_tb_realloc(tokens);
+    while (tb[i])
+    {
+        if (tb[i][0] == '|' && ft_strlen(tb[i]) == 1)
+        {
+            tokens = ft_tb_realloc(tokens);
+            j++;
+            i++;
+        }
+        tokens[j] = ft_join_space(tokens[j], tb[i]);
+        i++;
+    }
+    ft_freetabtab(tb);
+    return (tokens);
+}
+
