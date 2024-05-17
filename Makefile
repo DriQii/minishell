@@ -1,30 +1,36 @@
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -g
 
 NAME = minishell
 
-SRCS = exec.c \
+SRCS = srcs/main.c\
+		srcs/utils.c\
+		srcs/parsing.c
+
 
 OBJS = $(SRCS:.c=.o)
 
-SRCSDIR = srcs/
+all : $(NAME)
 
-OBJSDIR = objs/
+objs/%.o : src/%.c
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
-all     :   $(NAME)
-
-$(OBJSDIR)$(OBJS) : $(SRCSDIR)$(SRCS)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(NAME) :   $(OBJSDIR)$(OBJS)
-	$(MAKE) -C libft
-	$(CC) $(CFLAGS) $(OBJSDIR)$(OBJS) -o $(NAME) -L./libft/ -lft -I$(brew --prefix readline)/include -L$(brew --prefix readline)/lib -lreadline
+$(NAME) :   $(OBJS)
+	@echo "Make..."
+	@mkdir objs
+	@$(MAKE) -C libft
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L./libft/ -lft -I$(brew --prefix readline)/include -L$(brew --prefix readline)/lib -lreadline
+	@mv srcs/*.o objs/
+	@echo "Make Completed !"
 clean   :
-	$(MAKE) -C libft clean
-	rm -rf $(OBJ)
+	@echo "Clean..."
+	@make -C libft clean
+	@rm -rf objs/*.o
+	@echo "Clear !"
 fclean  :   clean
-	rm -f libft/libft.a
-	rm -f $(NAME)
+	@rm -f libft/libft.a
+	@rm -f $(NAME)
+	@rm -rf objs
 	
 re      :   fclean all

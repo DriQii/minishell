@@ -19,4 +19,20 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+typedef enum    arg_state
+{
+    QUOTE,
+    DQUOTE,
+    FSPACE,
+    DSPACE,
+    SEARCH,
+}               arg_state; 
+
+
+char	*ft_realloc(char *str);
+char	**ft_tb_realloc(char **tb);
+void	*ft_freetabtab(char **tb);
+char    **ft_receive_prompt(char *str);
+void	ft_printtabtab(char **tb);
+
 #endif

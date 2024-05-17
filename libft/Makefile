@@ -19,28 +19,27 @@ BONUSSRC = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_bac
 		ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 OBJ = $(SRC:.c=.o)
+
 BONUSOBJ = $(BONUSSRC:.c=.o)
-
-
 
 all : $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME) : $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJ)
 
 
 clean :
-	rm -rf $(OBJ) $(BONUSOBJ)
+	@rm -rf $(OBJ) $(BONUSOBJ)
 
 fclean : clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re : clean all
 
 bonus : $(OBJ) $(BONUSOBJ)
-	ar rcs $(NAME) $(OBJ) $(BONUSOBJ)
+	@ar rcs $(NAME) $(OBJ) $(BONUSOBJ)
 
 

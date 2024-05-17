@@ -26,10 +26,14 @@ char	**ft_tb_realloc(char **tb)
 
 
 	i = 0;
+    
 	if (!tb)
 		return (ft_calloc((2), sizeof(char *)));
     while (tb[i])
+    {   
         i++;
+    }
+    
 	newtb = ft_calloc(sizeof(char *) , i + 2);
     i = 0;
 	while (tb[i])
@@ -42,7 +46,7 @@ char	**ft_tb_realloc(char **tb)
 	return (newtb);
 }
 
-static void	*ft_freetabtab(char **tb)
+void	*ft_freetabtab(char **tb)
 {
     int i;
 
@@ -55,4 +59,17 @@ static void	*ft_freetabtab(char **tb)
     free(tb[i]);
 	free (tb);
 	return (NULL);
+}
+
+void	ft_printtabtab(char **tb)
+{
+    int i;
+
+    i = 0;
+	while (tb[i])
+	{
+		ft_putstr(tb[i]);
+        ft_putchar('\n');
+        i++;
+	}
 }
