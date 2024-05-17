@@ -1,7 +1,7 @@
 
-#include "../include/minishell.h"
+/*#include "../include/minishell.h"
 
-char *cutdir(char *path , char *arg)
+ char *cutdir(char *path , char *arg)
 {
     int i;
     char    *newpath;
@@ -84,7 +84,7 @@ int main(void)
     }
     rl_clear_history();
 
-}
+} */
 
 
 
