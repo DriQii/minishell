@@ -24,21 +24,6 @@
     return(newpath);
 }
 
-static void	*ft_freetabtab(char **args)
-{
-    int i;
-
-    i = 0;
-	while (args[i])
-	{
-		free(args[i]);
-        i++;
-	}
-    free(args[i]);
-	free (args);
-	return (NULL);
-}
-
 int main(void)
 {
     char *str;
