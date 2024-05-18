@@ -30,6 +30,7 @@ int main(void)
         free(tmp);
         str = readline(line);
         tb = ft_receive_prompt(str);
+        //ft_printtabtab(tb);
         tokens = ft_sort_token(tb);
         ft_printtabtab(tokens);
         ft_freetabtab(tokens);

@@ -18,7 +18,10 @@ int ft_change_agstate(arg_state cstate, arg_state *agstate)
 {
     if (*agstate == SEARCH && cstate != DSPACE)
     {
-        *agstate = FSPACE;
+        if (cstate == DQUOTE || cstate == QUOTE)
+            *agstate = cstate;
+        else
+            *agstate = FSPACE;
         return (1);
     }
     else if (*agstate == SEARCH && cstate == DSPACE)
