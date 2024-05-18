@@ -31,65 +31,57 @@ int ft_change_agstate(arg_state cstate, arg_state *agstate)
         *agstate = SEARCH;
         return (3);
     }
-    else if (cstate == DQUOTE && (*agstate != DQUOTE && *agstate != QUOTE))
+    else if ((cstate == DQUOTE || cstate == QUOTE) 
+    && (*agstate != DQUOTE && *agstate != QUOTE))
         *agstate = cstate;
-    else if (cstate == DQUOTE && *agstate == DQUOTE)
-    {
-        *agstate = FSPACE;
-    }
-    else if (cstate == QUOTE && (*agstate != DQUOTE && *agstate != QUOTE))
-        *agstate = cstate;
-    else if (cstate == QUOTE && *agstate == QUOTE)
+    else if ((cstate == DQUOTE && *agstate == DQUOTE) 
+    || (cstate == QUOTE && *agstate == QUOTE))
         *agstate = FSPACE;
     return (2);
     
 }
 
+void    ft_new_arg(t_arg *arg, t_index *index)
+{
+    (*arg).args = ft_tb_realloc((*arg).args);
+    (*arg).args[(*index).k] = ft_strdup((*arg).arg);
+    (*index).k++;
+    (*index).i--;
+    (*index).j = 0;
+    free((*arg).arg);
+    (*arg).arg = NULL;
+}
+void    ft_joinarg(t_arg *arg, char *str, t_index *index)
+{
+    (*arg).arg = ft_realloc((*arg).arg);
+    (*arg).arg[(*index).j] = str[(*index).i];
+    //printf("ok\n");
+    (*index).j++;
+}
+
 char    **ft_receive_prompt(char *str)
 {
-    char    **args;
-    char    *arg;
-    int     i;
-    int     j;
-    int     k;
-    int     strstate;
-    arg_state agstate;
+    t_index index;
+    t_arg   arg;
     
-    i = 0;
-    j = 0;
-    k = 0;
-    agstate = SEARCH;
-    args = NULL;
-    arg = NULL;
-    while(str[i])
+    index.i = 0;
+    index.j = 0;
+    index.k = 0;
+    arg.agstate = SEARCH;
+    arg.args = NULL;
+    arg.arg = NULL;
+    while(str[index.i])
     {
-        strstate = ft_change_agstate(ft_find_cstate(str[i], str[i + 1]), &agstate);
-        if (strstate == 1 || strstate == 2)
-        {
-        if(str[i] != 32 || arg)
-        {  
-            arg = ft_realloc(arg);
-            arg[j] = str[i];
-            j++;
-        }
-        }
-        else if (strstate == 3)
-        {
-            args = ft_tb_realloc(args);
-            args[k] = ft_strdup(arg);
-            free(arg);
-            arg = NULL;
-            k++;
-            i--;
-            j = 0;
-        }
-        i++;
+        
+        arg.strstate = ft_change_agstate(ft_find_cstate(str[index.i], str[index.i + 1]), &arg.agstate);
+        if ((arg.strstate == 1 || arg.strstate == 2) && (str[index.i] != 32 || arg.arg))
+            ft_joinarg(&arg, str, &index);
+        else if (arg.strstate == 3)
+            ft_new_arg(&arg, &index);
+        index.i++;
     }
-    args = ft_tb_realloc(args);
-    args[k] = ft_strdup(arg);
-    free(arg);
-    arg = NULL;
-    return (args);
+    ft_new_arg(&arg, &index);
+    return (arg.args);
 }
 
 char    *ft_join_space(char *s1, char *s2)

@@ -26,8 +26,22 @@ typedef enum    arg_state
     FSPACE,
     DSPACE,
     SEARCH,
-}               arg_state; 
+}               arg_state;
 
+typedef struct  s_arg
+{
+    char        **args;
+    char        *arg;
+    int         strstate;
+    arg_state   agstate;
+}               t_arg;
+
+typedef struct  s_index
+{
+    int i;
+    int j;
+    int k;
+}               t_index; 
 
 char	*ft_realloc(char *str);
 char	**ft_tb_realloc(char **tb);

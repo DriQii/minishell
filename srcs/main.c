@@ -9,8 +9,9 @@ int main(void)
     char *line;
     char *tmp;
     int i;
+    int j = 0;
 
-    while (1)
+    while (j++ != 2)
     {   
         
         line = ft_strjoin(getcwd(buff, 4096), "$ ");
@@ -29,8 +30,10 @@ int main(void)
             line = ft_strdup(tmp);
         free(tmp);
         str = readline(line);
+        add_history(str);
         tb = ft_receive_prompt(str);
-        //ft_printtabtab(tb);
+        free(line);
+        free(str);
         tokens = ft_sort_token(tb);
         ft_printtabtab(tokens);
         ft_freetabtab(tokens);
