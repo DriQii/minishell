@@ -1,43 +1,54 @@
 #include "../include/minishell.h"
 
-int main(void)
+char    *ft_print_prompt()
+{
+    char buff[4096];
+    char *prompt;
+    char *uprompt;
+    char *tmp;
+    int i;
+
+    prompt = ft_strjoin(getcwd(buff, 4096), "$ ");
+    i = 6;
+    while(prompt[i] && prompt[i] != '/')
+        i++;
+    tmp = ft_strdup(&prompt[i]);
+    free (prompt);
+    prompt = ft_strjoin("~", tmp);
+    free(tmp);
+    tmp = ft_strdup(prompt);
+    free(prompt);
+    if (ft_strcmp(tmp, "~") == 0)
+        prompt = ft_strjoin(tmp, "$ ");
+    else
+        prompt = ft_strdup(tmp);
+    free(tmp);
+    uprompt = readline(prompt);
+    add_history(uprompt);
+    return (uprompt);
+}
+char    **ft_tokeniser(char *uprompt)
 {
     char **tb;
     char **tokens;
-    char *str;
-    char buff[4096];
-    char *line;
-    char *tmp;
-    int i;
-    int j = 0;
 
+    tb = ft_receive_prompt(uprompt);
+    free(uprompt);
+    tokens = ft_sort_token(tb);
+    return (tokens);
+}
+int main(void)
+{
+    char **tokens;
+    char *uprompt;
+
+    int j = 0;
     while (j++ != 2)
     {   
-        
-        line = ft_strjoin(getcwd(buff, 4096), "$ ");
-        i = 6;
-        while(line[i] && line[i] != '/')
-            i++;
-        tmp = ft_strdup(&line[i]);
-        free (line);
-        line = ft_strjoin("~", tmp);
-        free(tmp);
-        tmp = ft_strdup(line);
-        free(line);
-        if (ft_strcmp(tmp, "~") == 0)
-            line = ft_strjoin(tmp, "$ ");
-        else
-            line = ft_strdup(tmp);
-        free(tmp);
-        str = readline(line);
-        add_history(str);
-        tb = ft_receive_prompt(str);
-        free(line);
-        free(str);
-        tokens = ft_sort_token(tb);
+        uprompt = ft_print_prompt();
+        tokens = ft_tokeniser(uprompt);
         ft_printtabtab(tokens);
         ft_freetabtab(tokens);
-        tb = NULL;
     }
     rl_clear_history();
     return (0);
