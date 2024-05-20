@@ -41,13 +41,34 @@ typedef struct  s_index
     int i;
     int j;
     int k;
-}               t_index; 
+}               t_index;
+
+typedef struct  s_tokens
+{
+    char    *token;
+    char    **args;
+
+}               t_tokens;
 
 char	*ft_realloc(char *str);
 char	**ft_tb_realloc(char **tb);
 void	*ft_freetabtab(char **tb);
-char    **ft_receive_prompt(char *str);
+char    **ft_sort_uprompt(char *str);
 void	ft_printtabtab(char **tb);
 char    **ft_sort_token(char **tb);
+void    ft_print_tokens(t_tokens *tokens);
+t_tokens    *ft_receive_uprompt(char *uprompt);
+char    **ft_tokeniser(char *uprompt);
+char    *ft_print_prompt();
+char    **ft_sort_uprompt(char *str);
+char    **ft_sort_token(char **tb);
+char    *ft_join_space(char *s1, char *s2);
+arg_state ft_find_cstate(char c, char next);
+int ft_change_agstate(arg_state cstate, arg_state *agstate);
+void    ft_new_arg(t_arg *arg, t_index *index);
+void    ft_joinarg(t_arg *arg, char *str, t_index *index);
+void    ft_echo(t_tokens token);
+void    ft_cd(char **args);
+int    ft_builtins_exec(t_tokens token);
 
 #endif

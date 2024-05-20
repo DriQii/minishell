@@ -1,65 +1,66 @@
 #include "../include/minishell.h"
 
-arg_state ft_find_cstate(char c, char next)
+char    *ft_print_prompt()
 {
-    if (c == 32 && next != 32)
-        return (FSPACE);
-    else if (c == 39)
-        return (QUOTE);
-    else if (c == 34)
-        return (DQUOTE);
-    else if (c == 32)
-        return (DSPACE);
+    char buff[4096];
+    char *prompt;
+    char *uprompt;
+    char *tmp;
+    int i;
+
+    prompt = ft_strjoin(getcwd(buff, 4096), "$ ");
+    i = 6;
+    while(prompt[i] && prompt[i] != '/')
+        i++;
+    tmp = ft_strdup(&prompt[i]);
+    free (prompt);
+    prompt = ft_strjoin("~", tmp);
+    free(tmp);
+    tmp = ft_strdup(prompt);
+    free(prompt);
+    if (ft_strcmp(tmp, "~") == 0)
+        prompt = ft_strjoin(tmp, "$ ");
     else
-        return (SEARCH);
+        prompt = ft_strdup(tmp);
+    free(tmp);
+    uprompt = readline(prompt);
+    add_history(uprompt);
+    free(prompt);
+    return (uprompt);
+}
+char    **ft_tokeniser(char *uprompt)
+{
+    char **tb;
+    char **tokens;
+
+    tb = ft_sort_uprompt(uprompt);
+    free(uprompt);
+    tokens = ft_sort_token(tb);
+    return (tokens);
 }
 
-int ft_change_agstate(arg_state cstate, arg_state *agstate)
+t_tokens    *ft_receive_uprompt(char *uprompt)
 {
-    if (*agstate == SEARCH && cstate != DSPACE)
+    t_tokens *tokens;
+    char **tmpt;
+    int i;
+
+    i = 0;
+    tmpt = ft_tokeniser(uprompt);
+    while (tmpt[i])
+        i++;
+    tokens = ft_calloc(sizeof(*tokens), i + 1);
+    i = 0;
+    while (tmpt[i])
     {
-        if (cstate == DQUOTE || cstate == QUOTE)
-            *agstate = cstate;
-        else
-            *agstate = FSPACE;
-        return (1);
+        tokens[i].token = tmpt[i];
+        tokens[i].args = ft_sort_uprompt(tmpt[i]);
+        i++;
     }
-    else if (*agstate == SEARCH && cstate == DSPACE)
-        return (0);
-    else if ((cstate == FSPACE || cstate == DSPACE) && *agstate == FSPACE)
-    {
-        *agstate = SEARCH;
-        return (3);
-    }
-    else if ((cstate == DQUOTE || cstate == QUOTE) 
-    && (*agstate != DQUOTE && *agstate != QUOTE))
-        *agstate = cstate;
-    else if ((cstate == DQUOTE && *agstate == DQUOTE) 
-    || (cstate == QUOTE && *agstate == QUOTE))
-        *agstate = FSPACE;
-    return (2);
-    
+    return (tokens);
 }
 
-void    ft_new_arg(t_arg *arg, t_index *index)
-{
-    (*arg).args = ft_tb_realloc((*arg).args);
-    (*arg).args[(*index).k] = ft_strdup((*arg).arg);
-    (*index).k++;
-    (*index).i--;
-    (*index).j = 0;
-    free((*arg).arg);
-    (*arg).arg = NULL;
-}
-void    ft_joinarg(t_arg *arg, char *str, t_index *index)
-{
-    (*arg).arg = ft_realloc((*arg).arg);
-    (*arg).arg[(*index).j] = str[(*index).i];
-    //printf("ok\n");
-    (*index).j++;
-}
-
-char    **ft_receive_prompt(char *str)
+char    **ft_sort_uprompt(char *str)
 {
     t_index index;
     t_arg   arg;
@@ -82,23 +83,6 @@ char    **ft_receive_prompt(char *str)
     }
     ft_new_arg(&arg, &index);
     return (arg.args);
-}
-
-char    *ft_join_space(char *s1, char *s2)
-{
-    char *newstr;
-    char sp[] = {" "};
-
-    if (!s1)
-        return (ft_strdup(s2));
-    newstr = ft_strjoin(s1, sp);
-    if (s1)
-        free(s1);
-    s1 = newstr;
-    newstr = ft_strjoin(newstr, s2);
-    if (s1)
-        free(s1);
-    return (newstr);
 }
 
 char    **ft_sort_token(char **tb)
@@ -125,4 +109,3 @@ char    **ft_sort_token(char **tb)
     ft_freetabtab(tb);
     return (tokens);
 }
-

@@ -73,3 +73,19 @@ void	ft_printtabtab(char **tb)
         i++;
 	}
 }
+
+void    ft_print_tokens(t_tokens *tokens)
+{
+    int i;
+
+    i = 0;
+    ft_printf("[//////////////////////////]\n");
+    while (tokens[i].token)
+    {
+        ft_printf("[TOKEN]\n%s\n[ARGS]\n", (tokens[i]).token);
+        ft_printtabtab((tokens[i]).args);
+        ft_printf("[//////////////////////////]\n");
+        i++;
+    }
+    
+}

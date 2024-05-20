@@ -6,7 +6,10 @@ NAME = minishell
 
 SRCS = srcs/main.c\
 		srcs/utils.c\
-		srcs/parsing.c
+		srcs/parsing.c \
+		srcs/parsing_utils.c \
+		srcs/builtins.c \
+		srcs/builtins_exec.c \
 
 
 OBJS = $(SRCS:.c=.o)
