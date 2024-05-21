@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kenz <kenz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 23:30:42 by evella            #+#    #+#             */
-/*   Updated: 2023/10/01 23:30:54 by evella           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:59:42 by kenz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
+#include <stdio.h>
 
 size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	if (!str)
+		return(0);
 	i = 0;
 	while (str[i])
 	{

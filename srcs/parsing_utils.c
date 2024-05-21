@@ -4,6 +4,8 @@ arg_state ft_find_cstate(char c, char next)
 {
     if (c == 32 && next != 32)
         return (FSPACE);
+    else if  (c == 0)
+        return (FSPACE);
     else if (c == 39)
         return (QUOTE);
     else if (c == 34)
@@ -16,6 +18,7 @@ arg_state ft_find_cstate(char c, char next)
 
 int ft_change_agstate(arg_state cstate, arg_state *agstate)
 {
+    //printf("[agstate = %d cstate = %d DQUOTE = %d]\n", *agstate, cstate, DQUOTE);
     if (*agstate == SEARCH && cstate != DSPACE)
     {
         if (cstate == DQUOTE || cstate == QUOTE)
@@ -23,6 +26,7 @@ int ft_change_agstate(arg_state cstate, arg_state *agstate)
         else
             *agstate = FSPACE;
         return (1);
+        printf("1\n");
     }
     else if (*agstate == SEARCH && cstate == DSPACE)
         return (0);
@@ -31,12 +35,12 @@ int ft_change_agstate(arg_state cstate, arg_state *agstate)
         *agstate = SEARCH;
         return (3);
     }
-    else if ((cstate == DQUOTE || cstate == QUOTE) 
-    && (*agstate != DQUOTE && *agstate != QUOTE))
-        *agstate = cstate;
     else if ((cstate == DQUOTE && *agstate == DQUOTE) 
     || (cstate == QUOTE && *agstate == QUOTE))
         *agstate = FSPACE;
+    else if ((cstate == DQUOTE || cstate == QUOTE) 
+    && (*agstate != DQUOTE && *agstate != QUOTE))
+        *agstate = cstate;
     return (2);
     
 }

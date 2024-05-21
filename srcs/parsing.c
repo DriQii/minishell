@@ -64,24 +64,22 @@ char    **ft_sort_uprompt(char *str)
 {
     t_index index;
     t_arg   arg;
+    int     l;
     
     index.i = 0;
     index.j = 0;
     index.k = 0;
+    l = 1;
     arg.agstate = SEARCH;
     arg.args = NULL;
     arg.arg = NULL;
-    while(str[index.i])
+    while(l)
     {
         
-        arg.strstate = ft_change_agstate(ft_find_cstate(str[index.i], str[index.i + 1]), &arg.agstate);
-        if ((arg.strstate == 1 || arg.strstate == 2) && (str[index.i] != 32 || arg.arg))
-            ft_joinarg(&arg, str, &index);
-        else if (arg.strstate == 3)
-            ft_new_arg(&arg, &index);
-        index.i++;
+        l = ft_find_arg(str, &arg, &index);
+        if (l == 1)
+            str = ft_gnl(str);
     }
-    ft_new_arg(&arg, &index);
     return (arg.args);
 }
 
