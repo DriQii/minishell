@@ -5,12 +5,13 @@ CFLAGS = -Wall -Wextra -g
 NAME = minishell
 
 SRCS = srcs/main.c\
-		srcs/utils.c\
+		srcs/exec.c \
+		srcs/utils.c \
 		srcs/parsing.c \
-		srcs/parsing_utils.c \
-		srcs/parsing_utils2.c \
 		srcs/builtins.c \
+		srcs/parsing_utils.c \
 		srcs/builtins_exec.c \
+		srcs/parsing_utils2.c \
 		srcs/builtins_utils.c
 
 OBJS = $(SRCS:.c=.o)

@@ -88,22 +88,34 @@ tokens[2] = ./push_swap 32 34 56 78 "4 65 6"
 /////////////
 
 
-3/// 
+3/// gerrer le env
 
-    gerrer le env
+    
 
-4///
+4/// EXEC
 
+split le path avec (path, ":")
+realloc chaque str en rajoutant le /premier argument du token
+realloc le tableau en rajoutant premier argument du token seul a la derniere case
 
+fork
+enfant :
+    boucler execve tant que le tableau na pas ete totalement parcouru ou que execve renvoie autre chose que -1
+        execve (tab[i], &token.args[1], envp)
+parent :
+    wait pid
+suite du programme
 
-"ec'h'o"               >> ec'h'o
+/////////////////////////////////////////////////////////////
+RESTE A FAIRE 
 
-ec'h 'o                 >> echo
+creer notre getenv
+ajout de variable
+export
+unset
+Parsing quote dquote 
+Pipes 
+les redirections
+implementer les CTRL
 
-"ec'h'o"o              >> ec'h'oo
-
-"ech"o                 >> echo
-
-"echo s'a'ucisse | wc" >> echo s'a'ucisse | wc
-
-
+/////////////////////////////////////////////////////////////

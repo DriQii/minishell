@@ -64,7 +64,7 @@ char    *ft_cutdir(char *path , char *arg);
 
 // BUILTINS.EXEC
 
-int    ft_builtins_exec(t_tokens token, char **envp);
+int    ft_builtins_exec(t_tokens token, char **env);
 
 // PARSING.UTILS
 
@@ -91,5 +91,11 @@ void	ft_printtabtab(char **tb);
 void	*ft_freetabtab(char **tb);
 char	*ft_realloc(char *str);
 char	**ft_tb_realloc(char **tb);
+
+// EXEC
+
+char    **ft_create_path(char *path, char *cmd);
+void    ft_exec(char *cmd, char **arg, char **env);
+char    **ft_create_env(char **envp);
 
 #endif
