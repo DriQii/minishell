@@ -30,6 +30,7 @@ $(NAME) :   $(OBJS)
 clean   :
 	@echo "Clean..."
 	@make -C libft clean
+	@rm -rf srcs/*.o
 	@rm -rf objs/*.o
 	@echo "Clear !"
 fclean  :   clean

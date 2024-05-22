@@ -109,6 +109,8 @@ suite du programme
 /////////////////////////////////////////////////////////////
 RESTE A FAIRE 
 
+
+$? $
 creer notre getenv
 ajout de variable
 export
