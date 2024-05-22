@@ -42,7 +42,6 @@ int ft_change_agstate(arg_state cstate, arg_state *agstate)
     && (*agstate != DQUOTE && *agstate != QUOTE))
         *agstate = cstate;
     return (2);
-    
 }
 
 void    ft_new_arg(t_arg *arg, t_index *index)

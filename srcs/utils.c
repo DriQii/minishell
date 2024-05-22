@@ -51,13 +51,18 @@ void	*ft_freetabtab(char **tb)
     int i;
 
     i = 0;
+	
+	if (!tb)
+		return (NULL);
 	while (tb[i])
 	{
 		free(tb[i]);
         i++;
 	}
-    free(tb[i]);
-	free (tb);
+	if (tb[i])
+    	free(tb[i]);
+	if (tb)
+		free(tb);
 	return (NULL);
 }
 
@@ -72,6 +77,7 @@ void	ft_printtabtab(char **tb)
         ft_putchar('\n');
         i++;
 	}
+	printf("s = [%s]\n",tb[i]);
 }
 
 void    ft_print_tokens(t_tokens *tokens)

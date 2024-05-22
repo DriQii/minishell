@@ -75,11 +75,11 @@ char    **ft_sort_uprompt(char *str)
     arg.arg = NULL;
     while(l)
     {
-        
         l = ft_find_arg(str, &arg, &index);
         if (l == 1)
             str = ft_gnl(str);
     }
+    ft_vr(arg.args);
     return (arg.args);
 }
 

@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-/* int main(int ac, char **av, char **envp)
+int main(int ac, char **av, char **envp)
 {
     t_tokens    *tokens;
     t_index     index;
@@ -21,4 +21,4 @@
     ft_freetabtab(env);
     rl_clear_history();
     return (0);
-} */
+}
