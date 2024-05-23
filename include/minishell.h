@@ -90,6 +90,8 @@ arg_state ft_find_cstate(char c, char next);
 // PARSING.ENV
 
 void    ft_vr(char **tb, char **env);
+char    *ft_parsing_end(char *str);
+char    **ft_last_parsing(char **tb);
 
 // PARSING
 

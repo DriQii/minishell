@@ -56,6 +56,7 @@ t_tokens    *ft_receive_uprompt(char *uprompt, char **env)
     {
         tokens[i].token = tmpt[i];
         tokens[i].args = ft_sort_uprompt(tmpt[i]);
+        ft_last_parsing(tokens[i].args);
         i++;
     }
     return (tokens);
