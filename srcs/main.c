@@ -13,7 +13,7 @@ int main(int ac, char **av, char **envp)
     while (index.i++ != 10)
     {
         index.j = 0;
-        tokens = ft_receive_uprompt(ft_print_prompt());
+        tokens = ft_receive_uprompt(ft_print_prompt(), env);
         while(tokens[index.j].token)
             ft_builtins_exec(tokens[index.j++], env);
         //ft_print_tokens(tokens);

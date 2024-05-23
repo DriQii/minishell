@@ -28,25 +28,26 @@ char    *ft_print_prompt()
     free(prompt);
     return (uprompt);
 }
-char    **ft_tokeniser(char *uprompt)
+char    **ft_tokeniser(char *uprompt, char **env)
 {
     char **tb;
     char **tokens;
 
     tb = ft_sort_uprompt(uprompt);
+    ft_vr(tb, env);
     free(uprompt);
     tokens = ft_sort_token(tb);
     return (tokens);
 }
 
-t_tokens    *ft_receive_uprompt(char *uprompt)
+t_tokens    *ft_receive_uprompt(char *uprompt, char **env)
 {
     t_tokens *tokens;
     char **tmpt;
     int i;
 
     i = 0;
-    tmpt = ft_tokeniser(uprompt);
+    tmpt = ft_tokeniser(uprompt, env);
     while (tmpt[i])
         i++;
     tokens = ft_calloc(sizeof(*tokens), i + 1);
@@ -79,7 +80,7 @@ char    **ft_sort_uprompt(char *str)
         if (l == 1)
             str = ft_gnl(str);
     }
-    ft_vr(arg.args);
+    
     return (arg.args);
 }
 

@@ -51,6 +51,14 @@ typedef struct  s_tokens
 
 }               t_tokens;
 
+typedef struct s_var
+{
+    char    *newstr;
+    char    *var;
+    char    *tmp;
+}               t_var;
+
+
 // BUILTINS
 
 void     ft_echo(t_tokens token);
@@ -73,20 +81,23 @@ int    ft_builtins_exec(t_tokens token, char **env);
 
 int     ft_change_agstate(arg_state cstate, arg_state *agstate);
 int     ft_find_arg(char *str, t_arg *arg, t_index *index);
-void    ft_vr(char **tb);
 void    ft_joinarg(t_arg *arg, char *str, t_index *index);
 void    ft_new_arg(t_arg *arg, t_index *index);
 char    *ft_gnl(char *str);
 char    *ft_join_space(char *s1, char *s2);
 arg_state ft_find_cstate(char c, char next);
 
+// PARSING.ENV
+
+void    ft_vr(char **tb, char **env);
+
 // PARSING
 
 char        *ft_print_prompt();
-char        **ft_tokeniser(char *uprompt);
+char        **ft_tokeniser(char *uprompt, char **env);
 char        **ft_sort_uprompt(char *str);
 char        **ft_sort_token(char **tb);
-t_tokens    *ft_receive_uprompt(char *uprompt);
+t_tokens    *ft_receive_uprompt(char *uprompt, char **env);
 
 // UTILS
 

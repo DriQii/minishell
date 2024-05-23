@@ -55,7 +55,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	{
 		return (NULL);
 	}
-	ft_strcpy(str, (char *)s1);
-	ft_strcpy(str + ft_strlen((char *) s1), (char *)s2);
+	if (s1)
+		ft_strcpy(str, (char *)s1);
+	if (s2)
+		ft_strcpy(str + ft_strlen((char *) s1), (char *)s2);
 	return (str);
 }

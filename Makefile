@@ -9,6 +9,7 @@ SRCS = srcs/main.c\
 		srcs/utils.c \
 		srcs/parsing.c \
 		srcs/builtins.c \
+		srcs/parsing_env.c \
 		srcs/parsing_utils.c \
 		srcs/builtins_exec.c \
 		srcs/parsing_utils2.c \

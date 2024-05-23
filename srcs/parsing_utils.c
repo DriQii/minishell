@@ -18,7 +18,6 @@ arg_state ft_find_cstate(char c, char next)
 
 int ft_change_agstate(arg_state cstate, arg_state *agstate)
 {
-    //printf("[agstate = %d cstate = %d DQUOTE = %d]\n", *agstate, cstate, DQUOTE);
     if (*agstate == SEARCH && cstate != DSPACE)
     {
         if (cstate == DQUOTE || cstate == QUOTE)
@@ -26,7 +25,6 @@ int ft_change_agstate(arg_state cstate, arg_state *agstate)
         else
             *agstate = FSPACE;
         return (1);
-        printf("1\n");
     }
     else if (*agstate == SEARCH && cstate == DSPACE)
         return (0);
@@ -58,7 +56,6 @@ void    ft_joinarg(t_arg *arg, char *str, t_index *index)
 {
     (*arg).arg = ft_realloc((*arg).arg);
     (*arg).arg[(*index).j] = str[(*index).i];
-    //printf("ok\n");
     (*index).j++;
 }
 
