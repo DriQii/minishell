@@ -49,8 +49,12 @@ void ft_exec(char *cmd, char **arg, char **env)
             printf("Exec fail\n");
         else
             printf("EXEC OK\n");
+        ft_freetabtab(path);
+        ft_freetabtab(env);
+        ft_freetabtab(arg);
         exit(0);
     }
-    ft_freetabtab(path);
+    else
+        ft_freetabtab(path);
     wait(&pid);
 }

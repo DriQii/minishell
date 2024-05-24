@@ -77,7 +77,6 @@ void	ft_printtabtab(char **tb)
 		printf("%s\n", tb[i]);
         i++;
 	}
-	printf("s = [%s]\nlen = %d",tb[i], i);
 }
 
 void    ft_print_tokens(t_tokens *tokens)

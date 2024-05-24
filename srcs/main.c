@@ -14,11 +14,16 @@ int main(int ac, char **av, char **envp)
     {
         index.j = 0;
         tokens = ft_receive_uprompt(ft_print_prompt(), env);
-        while(tokens[index.j].token)
+        while(tokens[index.j].args)
         {
-            ft_builtins_exec(tokens[index.j++], env);
+            if(ft_strcmp(tokens[index.j].args[0], "export") == 0)
+                env = ft_create_var(tokens[index.j].args[1], env);
+            else if (ft_strcmp(tokens[index.j].args[0], "unset") == 0)
+                env = ft_unset(tokens[index.j].args[1], env);
+            else
+                ft_builtins_exec(tokens[index.j], env);
             ft_freetabtab(tokens[index.j].args);
-            free(tokens[index.j].token);
+            index.j++;
         }
         free(tokens);
     }

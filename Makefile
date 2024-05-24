@@ -22,9 +22,11 @@ all : $(NAME)
 
 objs/%.o : src/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $<
+	
 
 $(NAME) :   $(OBJS)
 	@echo "Make..."
+	@mkdir objs
 	@$(MAKE) -C libft
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L./libft/ -lft -I$(brew --prefix readline)/include -L$(brew --prefix readline)/lib -lreadline
 	@mv srcs/*.o objs/
@@ -37,6 +39,7 @@ clean   :
 	@echo "Clear !"
 fclean  :   clean
 	@rm -f libft/libft.a
+	@rm -rf objs
 	@rm -f $(NAME)
 	
 re      :   fclean all

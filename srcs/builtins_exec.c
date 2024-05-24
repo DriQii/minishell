@@ -14,14 +14,6 @@ int    ft_builtins_exec(t_tokens token, char **env)
         return (printf("%s\n", getcwd(buf, 4096)), 0);
     else if (ft_strcmp(token.args[0], "env") == 0)
         return (ft_printtabtab(env), 0);
-    else if (ft_strcmp(token.args[0], "export") == 0)
-    {
-        env = ft_create_var(token.args[1], env);
-        printf("token = %s\nfirst = [%s]\n", token.args[1], env[52]);
-
-        //ft_printtabtab(env);
-        return (0);
-    }
     else
         ft_exec(token.args[0], token.args, env);
     return (1);
@@ -42,4 +34,31 @@ char    **ft_create_env(char **envp)
     env[i] = NULL;
     return (env);
 }
+char    **ft_tab_cat(char **tb, int pos)
+{
+    char    **newenv;
+    int i;
+    int j;
 
+    i = 0;
+    j = 0;
+    while(tb[i])
+        i++;
+    newenv = ft_calloc(i + 1, sizeof(char *));
+    i = -1;
+    while(tb[++i])
+    {
+        while(i < pos)
+        {
+            newenv[j] = ft_strdup(tb[i]);
+            i++;
+            j++;
+        }
+        if (i == pos)
+            i++;
+        newenv[j] = ft_strdup(tb[i]);
+        j++;
+    }
+    ft_freetabtab(tb);
+    return(newenv);
+}

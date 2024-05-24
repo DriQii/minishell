@@ -64,14 +64,16 @@ typedef struct s_var
 void     ft_echo(t_tokens token);
 void     ft_cd(char **args);
 void     ft_env(char **envp);
- void    ft_unset(char *varname, char **env, char **var_tab);
+char     **ft_unset(char *varname, char **env);
 
 // BUILTINS.UTILS
 
+int     ft_check_var(char *var, char **var_tab);
 void    ft_check_env(char *str);
 char    *ft_cutdir(char *path , char *arg);
-char    **ft_create_var(char *var_to_create, char **var_tab);
 char    *ft_get_env(char **env, char *var_name);
+char    **ft_tab_cat(char **tb, int pos);
+char    **ft_create_var(char *var_to_create, char **var_tab);
 
 // BUILTINS.EXEC
 
