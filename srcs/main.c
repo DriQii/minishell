@@ -15,8 +15,12 @@ int main(int ac, char **av, char **envp)
         index.j = 0;
         tokens = ft_receive_uprompt(ft_print_prompt(), env);
         while(tokens[index.j].token)
+        {
             ft_builtins_exec(tokens[index.j++], env);
-        //ft_print_tokens(tokens);
+            ft_freetabtab(tokens[index.j].args);
+            free(tokens[index.j].token);
+        }
+        free(tokens);
     }
     ft_freetabtab(env);
     rl_clear_history();

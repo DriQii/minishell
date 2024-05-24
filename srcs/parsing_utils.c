@@ -64,6 +64,7 @@ char    *ft_join_space(char *s1, char *s2)
     char *newstr;
     char sp[] = {" "};
 
+    printf("s1 = %s\ns2 = %s\n", s1, s2);
     if (!s1)
         return (ft_strdup(s2));
     newstr = ft_strjoin(s1, sp);

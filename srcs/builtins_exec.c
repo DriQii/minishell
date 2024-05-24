@@ -4,6 +4,8 @@ int    ft_builtins_exec(t_tokens token, char **env)
 {
     char    buf[4096];
 
+    if (!token.args[0][0])
+        return (0);
     if (ft_strcmp(token.args[0], "cd") == 0)
         return (ft_cd(token.args), 0);
     else if (ft_strcmp(token.args[0], "echo") == 0)
@@ -12,6 +14,14 @@ int    ft_builtins_exec(t_tokens token, char **env)
         return (printf("%s\n", getcwd(buf, 4096)), 0);
     else if (ft_strcmp(token.args[0], "env") == 0)
         return (ft_printtabtab(env), 0);
+    else if (ft_strcmp(token.args[0], "export") == 0)
+    {
+        env = ft_create_var(token.args[1], env);
+        printf("token = %s\nfirst = [%s]\n", token.args[1], env[52]);
+
+        //ft_printtabtab(env);
+        return (0);
+    }
     else
         ft_exec(token.args[0], token.args, env);
     return (1);

@@ -51,5 +51,6 @@ void ft_exec(char *cmd, char **arg, char **env)
             printf("EXEC OK\n");
         exit(0);
     }
+    ft_freetabtab(path);
     wait(&pid);
 }

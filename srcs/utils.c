@@ -41,6 +41,7 @@ char	**ft_tb_realloc(char **tb)
 		newtb[i] = ft_strdup(tb[i]);
 		i++;
 	}
+	newtb[i] = NULL;
 	ft_freetabtab(tb);
 	tb = NULL;
 	return (newtb);
@@ -73,11 +74,10 @@ void	ft_printtabtab(char **tb)
     i = 0;
 	while (tb[i])
 	{
-		ft_putstr(tb[i]);
-        ft_putchar('\n');
+		printf("%s\n", tb[i]);
         i++;
 	}
-	printf("s = [%s]\n",tb[i]);
+	printf("s = [%s]\nlen = %d",tb[i], i);
 }
 
 void    ft_print_tokens(t_tokens *tokens)

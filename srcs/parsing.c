@@ -59,6 +59,7 @@ t_tokens    *ft_receive_uprompt(char *uprompt, char **env)
         ft_last_parsing(tokens[i].args);
         i++;
     }
+    ft_freetabtab(tmpt);
     return (tokens);
 }
 
