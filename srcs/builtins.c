@@ -28,15 +28,6 @@ void     ft_echo(t_tokens token)
         printf("\n");
 }
 
-void    ft_env(char **envp)
-{
-    int     i;
-
-    i = 0;
-    while (envp[i])
-        printf("%s\n", envp[i++]);
-}
-
 char   **ft_unset(char *varname, char **env)
 {
     int pos;

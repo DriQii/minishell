@@ -61,23 +61,29 @@ typedef struct s_var
 
 // BUILTINS
 
-void     ft_echo(t_tokens token);
 void     ft_cd(char **args);
-void     ft_env(char **envp);
+void     ft_echo(t_tokens token);
 char     **ft_unset(char *varname, char **env);
 
 // BUILTINS.UTILS
 
-int     ft_check_var(char *var, char **var_tab);
 void    ft_check_env(char *str);
 char    *ft_cutdir(char *path , char *arg);
 char    *ft_get_env(char **env, char *var_name);
-char    **ft_tab_cat(char **tb, int pos);
-char    **ft_create_var(char *var_to_create, char **var_tab);
 
 // BUILTINS.EXEC
 
+char    **ft_create_env(char **envp);
+char    **ft_tab_cat(char **tb, int pos);
 int    ft_builtins_exec(t_tokens token, char **env);
+
+// EXPORT.C
+
+void    ft_bubble_export(char **var_tab);
+void    ft_swap_str(char **var_tab, int j);
+void    ft_display_export(char **export_tab);
+int     ft_check_var(char *var, char **var_tab);
+char    **ft_create_var(char *var_to_create, char **var_tab);
 
 // PARSING.UTILS
 
@@ -115,6 +121,5 @@ char	**ft_tb_realloc(char **tb);
 
 char    **ft_create_path(char *path, char *cmd);
 void    ft_exec(char *cmd, char **arg, char **env);
-char    **ft_create_env(char **envp);
 
 #endif

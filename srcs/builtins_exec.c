@@ -14,6 +14,8 @@ int    ft_builtins_exec(t_tokens token, char **env)
         return (printf("%s\n", getcwd(buf, 4096)), 0);
     else if (ft_strcmp(token.args[0], "env") == 0)
         return (ft_printtabtab(env), 0);
+    else if (ft_strcmp(token.args[0], "exit") == 0)
+        return (2);
     else
         ft_exec(token.args[0], token.args, env);
     return (1);

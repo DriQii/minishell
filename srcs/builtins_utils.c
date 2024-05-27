@@ -57,6 +57,8 @@ char    *ft_get_env(char **env, char *var_name)
                 while (var_tab[j])
                 {
                     tmp = ft_strjoin(value_var, "=");
+                    if (value_var)
+                        free(value_var);
                     value_var = ft_strjoin(tmp, var_tab[j]);
                     j++;
                     free(tmp);
@@ -71,46 +73,15 @@ char    *ft_get_env(char **env, char *var_name)
     return (value_var);
 }
 
-char    **ft_create_var(char *var_to_create, char **var_tab)
+/* int main(int ac, char **av, char **envp)
 {
-    int     i;
-    int     pos;
+    (void)ac;
+    (void)av;
 
-    var_tab = ft_tb_realloc(var_tab);
-    i = 0;
-    if (ft_strchr(var_to_create, '=') == NULL)
-        return (var_tab);
-    if (ft_check_var(var_to_create, var_tab) != 0)
-    {
-        pos = ft_check_var(var_to_create, var_tab);
-        free(var_tab[pos]);
-        var_tab[pos] = ft_strdup(var_to_create);
-        return (var_tab);
-    }
-    while(var_tab[i])
-        i++;
-    var_tab[i] = ft_strdup(var_to_create);
-    return(var_tab);
-}
+    char    **env = ft_create_env(envp);
 
-int     ft_check_var(char *var, char **var_tab)
-{
-    int i;
-    char    **tmp;
-    char    **tmp2;
-    
-    i = 0;
-    tmp = ft_split(var, '=');
-    while(var_tab[i])
-    {
-        tmp2 = ft_split(var_tab[i], '=');
-        if (ft_strcmp(tmp[0], tmp2[0]) == 0)
-            return (ft_freetabtab(tmp), ft_freetabtab(tmp2), i);
-        ft_freetabtab(tmp2);
-        i++;
-    }
-    ft_freetabtab(tmp);
-    tmp = NULL;
-    tmp2 = NULL;
-    return (0);
-}
+
+    //ft_printtabtab(env);
+    ft_bubble_export(env);
+    ft_freetabtab(env);
+} */
