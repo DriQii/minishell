@@ -11,7 +11,7 @@ int ft_check_available(char *str)
         return (j);
     while (str[i])
     {
-        if (str[i] != '\'' && str[i] != '\"')
+        if (str[i] != '\'' && str[i] != '\"' && str[i] != '\n')
             j =1;
         i++;
     }
