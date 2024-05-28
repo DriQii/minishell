@@ -42,10 +42,10 @@ void ft_change_flux(e_flux *brulux, int savein, int saveout)
 static void    ft_redirect_flux(char **args, t_index *index, t_flux *flux, int state)
 {
     if (state == 0)
-    {     
+    {
         if (flux->actualflux == IN)
             flux->actualflux = INOUT;
-        else 
+        else
             flux->actualflux = OUT;
         ft_redirect_output(&flux->actualfd , args, index->i);
     }

@@ -27,6 +27,12 @@ int    ft_find_arg(char *str, t_arg *arg, t_index *index)
     }
     if (arg->agstate == FSPACE)
         return (ft_new_arg(arg, index), 0);
+    else if(index->i == 0)
+    {
+        arg->args = ft_tb_realloc(arg->args);
+        arg->args[index->k] = ft_calloc(sizeof(char), 1);
+        return (0);
+    }
     return (1);
 }
 

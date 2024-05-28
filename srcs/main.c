@@ -38,7 +38,7 @@ int main(int ac, char **av, char **envp)
         free(tokens);
     }
     ft_freetabtab(env);
-    rl_clear_history();   
+    rl_clear_history();
     return (0);
 }
 

@@ -27,7 +27,7 @@ char    *ft_cutdir(char *path , char *arg)
         ft_strncpy(newpath, path, i + 1);
     }
     else
-    {  
+    {
         newpath = ft_strjoin(path, "/");
         newpath = ft_strjoin(newpath, arg);
     }

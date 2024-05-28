@@ -68,7 +68,7 @@ char    **ft_sort_uprompt(char *str)
     t_index index;
     t_arg   arg;
     int     l;
-    
+
     index.i = 0;
     index.j = 0;
     index.k = 0;
@@ -82,7 +82,7 @@ char    **ft_sort_uprompt(char *str)
         if (l == 1)
             str = ft_gnl(str);
     }
-    
+
     return (arg.args);
 }
 

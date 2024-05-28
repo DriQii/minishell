@@ -21,13 +21,13 @@ char    **ft_create_path(char *path, char *cmd)
         tbpath[j] = ft_strjoin(tmp, cmd);
         free(tmp);
         i++;
-        j++;      
+        j++;
     }
     ft_freetabtab(tmppath);
     return (tbpath);
 }
 
-void ft_exec(char *cmd, char **arg, char **env)
+void    ft_exec(char *cmd, char **arg, char **env)
 {
     char    **path;
     pid_t   pid;
@@ -47,7 +47,7 @@ void ft_exec(char *cmd, char **arg, char **env)
             i++;
         }
         if (execr == -1)
-            printf("Exec fail\n");
+            printf("bash: %s: command not found\n", cmd);
         else
             printf("EXEC OK\n");
         ft_freetabtab(path);

@@ -24,7 +24,7 @@ char *ft_parsing_end(char *str)
     char        *newstr;
     int         i;
     int         j;
-    
+
 
     i = 0;
     j = 0;
@@ -32,7 +32,7 @@ char *ft_parsing_end(char *str)
     strstate = SEARCH;
     newstr = NULL;
     if (!ft_check_available(str))
-        return (ft_calloc(sizeof(char), 1));
+        return (free(str), ft_calloc(sizeof(char), 1));
     if (str[i])
          ft_change_agstate(ft_find_cstate(str[0], str[1]), &strstate);
     while(str[i])
@@ -56,7 +56,7 @@ char *ft_parsing_end(char *str)
         else
         {
             if (str[i])
-            {   
+            {
                 newstr = ft_realloc(newstr);
                 newstr[j] = str[i];
                 ft_change_agstate(ft_find_cstate(str[i], str[i + 1]), &strstate);
@@ -73,7 +73,7 @@ char    **ft_last_parsing(char **tb)
 {
     int i;
 
-    i = 0;    
+    i = 0;
     while(tb[i])
     {
         tb[i] = ft_parsing_end(tb[i]);

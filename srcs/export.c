@@ -29,7 +29,7 @@ int     ft_check_var(char *var, char **var_tab)
     int i;
     char    **tmp;
     char    **tmp2;
-    
+
     i = 0;
     tmp = ft_split(var, '=');
     while(var_tab[i])
