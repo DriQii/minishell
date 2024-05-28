@@ -15,7 +15,7 @@ void    ft_check_env(char *str)
 char    *ft_cutdir(char *path , char *arg)
 {
     int i;
-    char    *newpath;
+    char	*newpath;
     char    *tmp;
 
     i = 0;
