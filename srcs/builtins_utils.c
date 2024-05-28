@@ -16,8 +16,10 @@ char    *ft_cutdir(char *path , char *arg)
 {
     int i;
     char    *newpath;
+    char    *tmp;
 
     i = 0;
+    tmp = NULL;
     if (!arg || ft_strcmp(arg, "~") == 0)
     {
         i = 6;
@@ -28,8 +30,9 @@ char    *ft_cutdir(char *path , char *arg)
     }
     else
     {
-        newpath = ft_strjoin(path, "/");
-        newpath = ft_strjoin(newpath, arg);
+        tmp = ft_strjoin(path, "/");
+        newpath = ft_strjoin(tmp, arg);
+        free(tmp);
     }
     return(newpath);
 }
@@ -72,16 +75,3 @@ char    *ft_get_env(char **env, char *var_name)
     var_tab = NULL;
     return (value_var);
 }
-
-/* int main(int ac, char **av, char **envp)
-{
-    (void)ac;
-    (void)av;
-
-    char    **env = ft_create_env(envp);
-
-
-    //ft_printtabtab(env);
-    ft_bubble_export(env);
-    ft_freetabtab(env);
-} */
