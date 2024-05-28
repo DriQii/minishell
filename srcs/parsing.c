@@ -67,6 +67,7 @@ char    **ft_sort_uprompt(char *str)
 {
     t_index index;
     t_arg   arg;
+    char    *newstr;
     int     l;
 
     index.i = 0;
@@ -76,13 +77,15 @@ char    **ft_sort_uprompt(char *str)
     arg.agstate = SEARCH;
     arg.args = NULL;
     arg.arg = NULL;
+    newstr = ft_strdup(str);
     while(l)
     {
-        l = ft_find_arg(str, &arg, &index);
+        l = ft_find_arg(newstr, &arg, &index);
         if (l == 1)
-            str = ft_gnl(str);
+            newstr = ft_gnl(newstr);
     }
-
+    if (newstr)
+        free(newstr);
     return (arg.args);
 }
 

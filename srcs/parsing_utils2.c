@@ -44,6 +44,8 @@ char    *ft_gnl(char *str)
     write(1, "> ", 2);
     tmp2 = ft_cut_gnl();
     tmp = ft_strdup(str);
+    if (str)
+        free(str);
     str = ft_strjoin(tmp, tmp2);
     if (tmp)
         free(tmp);
