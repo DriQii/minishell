@@ -11,62 +11,65 @@ int ft_check_available(char *str)
         return (j);
     while (str[i])
     {
-        if (str[i] != '\'' && str[i] != '\"' && str[i] != '\n')
-            j =1;
+        if (str[i] != '\n')
+            j = 1;
         i++;
     }
     return (j);
+}
+
+void ft_add_last_str(arg_state *strstate, arg_state *state, t_index *index, t_parsend *pstr)
+{
+    if (*strstate == FSPACE)
+        ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+    if ((*state == SEARCH) && (*strstate == DQUOTE || *strstate == QUOTE ))
+    {
+       *state = *strstate;
+        if (pstr->str[++index->i])
+            ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+    }
+    if ((*state == DQUOTE && pstr->str[index->i] == '\"') || (*state == QUOTE && pstr->str[index->i] == '\''))
+    {
+       *state = SEARCH;
+        if (pstr->str[++index->i])
+            ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+    }
+    else
+    {
+        if (pstr->str[index->i])
+        {
+            pstr->newstr = ft_realloc(pstr->newstr);
+            pstr->newstr[index->j] = pstr->str[index->i];
+            ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+        }
+        index->j++;
+        index->i++;
+    }
 }
 char *ft_parsing_end(char *str)
 {
     arg_state   strstate;
     arg_state   state;
-    char        *newstr;
-    int         i;
-    int         j;
+    t_parsend   pstr;
+    t_index     index;
 
 
-    i = 0;
-    j = 0;
+    index.i = 0;
+    index.j = 0;
     state = SEARCH;
     strstate = SEARCH;
-    newstr = NULL;
-    if (!ft_check_available(str))
-        return (free(str), ft_calloc(sizeof(char), 1));
-    if (str[i])
+    pstr.newstr = NULL;
+    pstr.str = str;
+    if (str[index.i])
          ft_change_agstate(ft_find_cstate(str[0], str[1]), &strstate);
-    while(str[i])
-    {
-        if (strstate == FSPACE)
-            ft_change_agstate(ft_find_cstate(str[i], str[i + 1]), &strstate);
-        if ((state == SEARCH) && (strstate == DQUOTE || strstate == QUOTE ))
-        {
-            state = strstate;
-            i++;
-            if (str[i])
-                ft_change_agstate(ft_find_cstate(str[i], str[i + 1]), &strstate);
-        }
-        if ((state == DQUOTE && str[i] == '\"') || (state == QUOTE && str[i] == '\''))
-        {
-            state = SEARCH;
-            i++;
-            if (str[i])
-                ft_change_agstate(ft_find_cstate(str[i], str[i + 1]), &strstate);
-        }
-        else
-        {
-            if (str[i])
-            {
-                newstr = ft_realloc(newstr);
-                newstr[j] = str[i];
-                ft_change_agstate(ft_find_cstate(str[i], str[i + 1]), &strstate);
-            }
-            j++;
-            i++;
-        }
-    }
+    while(str[index.i])
+        ft_add_last_str(&strstate, &state, &index, &pstr);
+    if(!pstr.newstr)
+        return(free(str), ft_calloc(sizeof(char), 1));
+    //else if (!ft_check_available(pstr.newstr)) !!NE PAS SUPPRIMER!!
+        //return(free(str), free(pstr.newstr), ft_calloc(sizeof(char), 1));
     free(str);
-    return (newstr);
+    return (pstr.newstr);
 }
 
 char    **ft_last_parsing(char **tb)

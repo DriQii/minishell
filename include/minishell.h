@@ -75,6 +75,12 @@ typedef struct s_var
     char    *tmp;
 }               t_var;
 
+typedef struct s_parsend
+{
+    char    *newstr;
+    char    *str;
+}               t_parsend;
+
 
 // BUILTINS
 
@@ -138,6 +144,7 @@ char	**ft_tb_realloc(char **tb);
 
 char    **ft_create_path(char *path, char *cmd);
 void    ft_exec(char *cmd, char **arg, char **env);
+void ft_prompt_exec(t_tokens *tokens, t_index *index, char **env, t_flux *brulux);
 
 // FLUX
 

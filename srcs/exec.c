@@ -1,5 +1,21 @@
 #include "../include/minishell.h"
 
+void ft_prompt_exec(t_tokens *tokens, t_index *index, char **env, t_flux *brulux)
+{
+    tokens[index->j].args = ft_checkredirect(tokens[index->j].args, brulux);
+    if(ft_strcmp(tokens[index->j].args[0], "export") == 0)
+        env = ft_export(tokens[index->j].args[1], env);
+    else if (ft_strcmp(tokens[index->j].args[0], "unset") == 0)
+        env = ft_unset(tokens[index->j].args[1], env);
+    else
+        index->k = ft_builtins_exec(tokens[index->j], env);
+    ft_freetabtab(tokens[index->j].args);
+    free(tokens->token);
+    if (brulux->actualflux != INIT)
+        ft_change_flux(&brulux->actualflux, brulux->savein, brulux->saveout);
+    index->j++;
+}
+
 char    **ft_create_path(char *path, char *cmd)
 {
     char    **tbpath;
@@ -42,14 +58,9 @@ void    ft_exec(char *cmd, char **arg, char **env)
     {
         execr = execve(path[i], arg, env);
         while (execr == -1 && path[i])
-        {
-            execr = execve(path[i], arg, env);
-            i++;
-        }
+            execr = execve(path[i++], arg, env);
         if (execr == -1)
             printf("bash: %s: command not found\n", cmd);
-        else
-            printf("EXEC OK\n");
         ft_freetabtab(path);
         ft_freetabtab(env);
         ft_freetabtab(arg);
