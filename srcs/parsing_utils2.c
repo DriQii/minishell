@@ -16,7 +16,7 @@ static char    *ft_cut_gnl(void)
 
 int    ft_find_arg(char *str, t_arg *arg, t_index *index)
 {
-    while(str[index->i])
+    while(str && str[index->i])
     {
         arg->strstate = ft_change_agstate(ft_find_cstate(str[index->i], str[index->i + 1]), &arg->agstate);
         if ((arg->strstate == 1 || arg->strstate == 2) && (str[index->i] != 32 || arg->arg))

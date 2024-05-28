@@ -33,12 +33,14 @@ char	**ft_tb_realloc(char **tb)
     {
         i++;
     }
-
 	newtb = ft_calloc(sizeof(char *) , i + 2);
     i = 0;
 	while (tb[i])
 	{
-		newtb[i] = ft_strdup(tb[i]);
+		if (tb[i][0])
+			newtb[i] = ft_strdup(tb[i]);
+		else
+			newtb[i] = ft_calloc(sizeof(char), 1);
 		i++;
 	}
 	newtb[i] = NULL;

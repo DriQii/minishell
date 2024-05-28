@@ -79,7 +79,10 @@ char    **ft_checkredirect(char **args, t_flux *flux)
         else if (flux->actualflux == INIT && index.k == 0)
         {
             newargs = ft_tb_realloc(newargs);
-            newargs[index.j++] = ft_strdup(args[index.i]);
+            if (args[index.i][0])
+                newargs[index.j++] = ft_strdup(args[index.i]);
+            else
+                newargs[index.j++] = ft_calloc(sizeof(char), 1);
         }
         index.i++;
     }
