@@ -117,5 +117,5 @@ Pipes
 les redirections
 implementer les CTRL
 variable environnement \n
-o
+
 /////////////////////////////////////////////////////////////
