@@ -6,7 +6,8 @@ char   *ft_get_var(char *str, int *i, int *j, char **env)
     char    *tmp;
 
     var = NULL;
-    while (str[*i] && ft_find_cstate(str[*i], str[(*i) + 1]) == SEARCH && !( *j > 2 && str[*i] == '$'))
+    while (str[*i] && ft_find_cstate(str[*i], str[(*i) + 1]) == SEARCH 
+    && !( *j > 2 && str[*i] == '$') && str[*i] != '\n')
     {
         (*i)++;
         (*j)++;
