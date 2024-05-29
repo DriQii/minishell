@@ -25,7 +25,7 @@ static e_flux    ft_redirect_input(int *fd, char **args, int i)
     else if(args[i][0] == '<' && ft_strlen(args[i]) == 1)
     {
         *fd = open(args[i + 1],  O_RDONLY);
-        dup2(*fd, STDIN_FILENO);
+            dup2(*fd, STDIN_FILENO);
     }
     return (IN);
 }
@@ -33,13 +33,13 @@ static e_flux    ft_redirect_input(int *fd, char **args, int i)
 void ft_change_flux(e_flux *brulux, int savein, int saveout)
 {
     if (*brulux == IN || *brulux == INOUT)
-        {dup2(savein, STDIN_FILENO);}
+        dup2(savein, STDIN_FILENO);
     if (*brulux == OUT || *brulux == INOUT)
-        {dup2(saveout, STDOUT_FILENO);}
+        dup2(saveout, STDOUT_FILENO);
     *brulux = INIT;
 }
 
-static void    ft_redirect_flux(char **args, t_index *index, t_flux *flux, int state)
+static e_flux   ft_redirect_flux(char **args, t_index *index, t_flux *flux, int state)
 {
     if (state == 0)
     {
@@ -56,8 +56,18 @@ static void    ft_redirect_flux(char **args, t_index *index, t_flux *flux, int s
         else
             flux->actualflux = IN;
         ft_redirect_input(&flux->actualfd , args, index->i);
+        if (flux->actualfd == -1)
+            return(ERR);
     }
+    return(IN);
     index->k = 1;
+}
+
+void    ft_write_err(int saveout, char *str)
+{
+    write(saveout, "bash: ", ft_strlen("bash: "));
+    write(saveout, str, ft_strlen(str));
+    write(saveout, ": No such file or directory\n", ft_strlen(": No such file or directory\n"));
 }
 
 char    **ft_checkredirect(char **args, t_flux *flux)
@@ -75,7 +85,10 @@ char    **ft_checkredirect(char **args, t_flux *flux)
         if (ft_strcmp(args[index.i], ">>") == 0 || args[index.i][0] == '>')
             ft_redirect_flux(args, &index, flux, 0);
         else if(args[index.i][0] == '<' || ft_strcmp(args[index.i], "<<") == 0)
-            ft_redirect_flux(args, &index, flux, 1);
+        {
+            if (ft_redirect_flux(args, &index, flux, 1) == ERR)
+                return (ft_write_err(flux->saveout, args[index.i + 1]), ft_freetabtab(args), ft_freetabtab(newargs), NULL);
+        }
         else if (flux->actualflux == INIT && index.k == 0)
         {
             newargs = ft_tb_realloc(newargs);

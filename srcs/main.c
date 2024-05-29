@@ -1,10 +1,9 @@
 #include "../include/minishell.h"
-
 int main(int ac, char **av, char **envp)
 {
     t_tokens    *tokens;
     t_index     index;
-    char        **env;
+    char        ***env;
     t_flux        brulux;
 
     brulux.actualfd = 0;
@@ -14,16 +13,18 @@ int main(int ac, char **av, char **envp)
     (void)av;
     index.i = 0;
     index.k = 0;
-    env = ft_create_env(envp);
+    env = ft_calloc(sizeof(char **), 1);
+    *env = ft_create_env(envp);
     while (index.k != 2)
     {
         index.j = 0;
-        tokens = ft_receive_uprompt(ft_print_prompt(), env);
+        tokens = ft_receive_uprompt(ft_print_prompt(), *env);
         while(tokens[index.j].args)
             ft_prompt_exec(tokens, &index, env, &brulux);
         free(tokens);
     }
-    ft_freetabtab(env);
+    ft_freetabtab(*env);
+    free(env);
     rl_clear_history();
     return (0);
 }

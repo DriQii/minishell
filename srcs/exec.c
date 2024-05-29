@@ -1,12 +1,14 @@
 #include "../include/minishell.h"
 
-void ft_prompt_exec(t_tokens *tokens, t_index *index, char **env, t_flux *brulux)
+void ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env, t_flux *brulux)
 {
     tokens[index->j].args = ft_checkredirect(tokens[index->j].args, brulux);
+    if (tokens[index->j].args == NULL)
+        return (ft_change_flux(&brulux->actualflux, brulux->savein, brulux->saveout));
     if(ft_strcmp(tokens[index->j].args[0], "export") == 0)
-        env = ft_export(tokens[index->j].args[1], env);
+        *env = ft_export(tokens[index->j].args[1], *env);
     else if (ft_strcmp(tokens[index->j].args[0], "unset") == 0)
-        env = ft_unset(tokens[index->j].args[1], env);
+        *env = ft_unset(tokens[index->j].args[1], *env);
     else
         index->k = ft_builtins_exec(tokens[index->j], env);
     ft_freetabtab(tokens[index->j].args);
