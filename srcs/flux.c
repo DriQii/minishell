@@ -25,7 +25,7 @@ static e_flux    ft_redirect_input(int *fd, char **args, int i)
     else if(args[i][0] == '<' && ft_strlen(args[i]) == 1)
     {
         *fd = open(args[i + 1],  O_RDONLY);
-            dup2(*fd, STDIN_FILENO);
+        dup2(*fd, STDIN_FILENO);
     }
     return (IN);
 }
@@ -45,7 +45,7 @@ static e_flux   ft_redirect_flux(char **args, t_index *index, t_flux *flux, int 
     {
         if (flux->actualflux == IN)
             flux->actualflux = INOUT;
-        else
+        else if (flux->actualflux != INOUT)
             flux->actualflux = OUT;
         ft_redirect_output(&flux->actualfd , args, index->i);
     }
@@ -53,7 +53,7 @@ static e_flux   ft_redirect_flux(char **args, t_index *index, t_flux *flux, int 
     {
         if (flux->actualflux == OUT)
             flux->actualflux = INOUT;
-        else
+        else if (flux->actualflux != INOUT)
             flux->actualflux = IN;
         ft_redirect_input(&flux->actualfd , args, index->i);
         if (flux->actualfd == -1)

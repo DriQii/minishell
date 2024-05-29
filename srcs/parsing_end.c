@@ -25,23 +25,22 @@ void ft_add_last_str(arg_state *strstate, arg_state *state, t_index *index, t_pa
     if ((*state == SEARCH) && (*strstate == DQUOTE || *strstate == QUOTE ))
     {
        *state = *strstate;
+        ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
         if (pstr->str[++index->i])
             ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
     }
     if ((*state == DQUOTE && pstr->str[index->i] == '\"') || (*state == QUOTE && pstr->str[index->i] == '\''))
     {
        *state = SEARCH;
+        ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
         if (pstr->str[++index->i])
             ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
     }
-    else
+    else if (pstr->str[index->i])
     {
-        if (pstr->str[index->i])
-        {
-            pstr->newstr = ft_realloc(pstr->newstr);
-            pstr->newstr[index->j] = pstr->str[index->i];
-            ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
-        }
+        pstr->newstr = ft_realloc(pstr->newstr);
+        pstr->newstr[index->j] = pstr->str[index->i];
+        ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
         index->j++;
         index->i++;
     }
