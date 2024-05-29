@@ -19,6 +19,28 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+# define DEF             "\001\e\033[0m\002"
+# define RED             "\001\e\033[0;31m\002"
+# define GREEN             "\001\e\033[0;32m\002"
+# define YELLOW         "\001\e\033[0;33m\002"
+# define BLUE             "\001\e\033[0;34m\002"
+# define PURPLE         "\001\e\033[0;35m\002"
+# define CYAN             "\001\e\033[0;36m\002"
+# define WHITE             "\001\e\033[0;37m\002"
+# define BOLD_RED         "\001\e\033[1;31m\002"
+# define BOLD_GREEN     "\001\e\033[1;32m\002"
+# define BOLD_YELLOW     "\001\e\033[1;33m\002"
+# define BOLD_BLUE         "\001\e\033[1;34m\002"
+# define BOLD_PURPLE     "\001\e\033[1;35m\002"
+# define BOLD_CYAN         "\001\e\033[1;36m\002"
+# define BOLD_WHITE     "\001\e\033[1;37m\002"
+# define BOLD_BLACK     "\001\e\033[1;30m\002"
+# define COLOR            "\001\e\033[38;2;255;153;153m\002"
+# define BG_GREEN        "\001\e\033[48;2;0;200;0m\002"
+# define BG_RED            "\001\e\033[48;2;200;70;0m\002"
+# define FG_GREEN        "\001\e\033[38;2;0;200;0m\002"
+# define FG_RED            "\001\e\033[38;2;200;70;0m\002"
+
 typedef enum    arg_state
 {
     QUOTE,

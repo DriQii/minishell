@@ -8,18 +8,18 @@ char    *ft_print_prompt()
     char *tmp;
     int i;
 
-    prompt = ft_strjoin(getcwd(buff, 4096), "$ ");
+    prompt = ft_strjoin(getcwd(buff, 4096), DEF" > "DEF);
     i = 6;
     while(prompt[i] && prompt[i] != '/')
         i++;
     tmp = ft_strdup(&prompt[i]);
     free (prompt);
-    prompt = ft_strjoin("~", tmp);
+    prompt = ft_strjoin(BOLD_GREEN"︻╦╤─~"BOLD_BLUE, tmp);
     free(tmp);
     tmp = ft_strdup(prompt);
     free(prompt);
-    if (ft_strcmp(tmp, "~") == 0)
-        prompt = ft_strjoin(tmp, "$ ");
+    if (ft_strcmp(tmp, BOLD_GREEN"︻╦╤─~"BOLD_BLUE) == 0)
+        prompt = ft_strjoin(tmp , DEF" > ");
     else
         prompt = ft_strdup(tmp);
     free(tmp);

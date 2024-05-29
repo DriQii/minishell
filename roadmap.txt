@@ -1,4 +1,4 @@
-valgrind = valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind.supp ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --suppressions=valgrind.supp ./minishell
 
 RESUME SUJET\
 

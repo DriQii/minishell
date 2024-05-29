@@ -56,17 +56,22 @@ void    ft_exec(char *cmd, char **arg, char **env)
     pid = fork();
     if (pid == 0)
     {
-        execr = execve(path[i], arg, env);
-        while (execr == -1 && path[i])
-            execr = execve(path[i++], arg, env);
+        execr = access(path[0] ,X_OK);
+        while (execr == -1 && path[++i])
+            execr = access(path[i], X_OK);
         if (execr == -1)
             printf("bash: %s: command not found\n", cmd);
+        else
+            execve(path[i], arg, env);
         ft_freetabtab(path);
         ft_freetabtab(env);
         ft_freetabtab(arg);
         exit(0);
     }
     else
+    {
         ft_freetabtab(path);
-    wait(&pid);
+        wait(&pid);
+    }
+    
 }
