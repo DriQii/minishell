@@ -71,15 +71,29 @@ char *ft_parsing_end(char *str)
     return (pstr.newstr);
 }
 
-char    **ft_last_parsing(char **tb)
+void    ft_last_parsing(t_tokens *tokens)
 {
     int i;
 
     i = 0;
-    while(tb[i])
+    char *tmp;
+    char *tokentmp;
+
+    tmp = NULL;
+    tokentmp = NULL;
+    while(tokens->args[i])
     {
-        tb[i] = ft_parsing_end(tb[i]);
+        tmp = ft_strjoin(tokentmp, tokens->args[i]);
+        if (tokentmp)
+            free(tokentmp);
+        if (tokens->args[i + 1])
+            tokentmp = ft_strjoin(tmp, " ");
+        else
+            tokentmp = ft_strdup(tmp);
+        free(tmp);
+        tokens->args[i] = ft_parsing_end(tokens->args[i]);
         i++;
     }
-    return (tb);
+    free(tokens->token);
+    tokens->token = tokentmp;
 }
