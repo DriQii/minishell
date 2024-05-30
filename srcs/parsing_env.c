@@ -58,7 +58,7 @@ char    *ft_swap_var(char *str, char **env)
     var.var = NULL;
     while (str[index.i])
     {
-        ft_change_agstate(ft_find_cstate(str[index.i], str[index.i + 1]), &strstate);
+        ft_change_agstate_2(ft_find_cstate_2(str[index.i], str[index.i + 1]), &strstate);
         if (str[index.i] == '$' && strstate != QUOTE)
         {
             var.var = ft_get_var(str, &index.i, &index.j, env);

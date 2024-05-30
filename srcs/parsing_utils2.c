@@ -18,7 +18,7 @@ int    ft_find_arg(char *str, t_arg *arg, t_index *index)
 {
     while(str && str[index->i])
     {
-        arg->strstate = ft_change_agstate(ft_find_cstate(str[index->i], str[index->i + 1]), &arg->agstate);
+        arg->strstate = ft_change_agstate(ft_find_cstate(str[index->i], str[index->i + 1]), &arg->agstate, index->j);
         if ((arg->strstate == 1 || arg->strstate == 2) && (str[index->i] != 32 || arg->arg))
             ft_joinarg(arg, str, index);
         else if (arg->strstate == 3)

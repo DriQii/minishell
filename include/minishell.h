@@ -133,7 +133,7 @@ int     ft_check_var(char *var, char **var_tab);
 
 // PARSING.UTILS
 
-int     ft_change_agstate(arg_state cstate, arg_state *agstate);
+int     ft_change_agstate(arg_state cstate, arg_state *agstate, int j);
 int     ft_find_arg(char *str, t_arg *arg, t_index *index);
 int     ft_find_arg_2(char *str, t_arg *arg, t_index *index);
 void    ft_joinarg(t_arg *arg, char *str, t_index *index);

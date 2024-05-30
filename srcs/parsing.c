@@ -87,6 +87,7 @@ char    **ft_sort_uprompt(char *str)
     }
     if (newstr)
         free(newstr);
+    //ft_printtabtab(arg.args);
     return (arg.args);
 }
 

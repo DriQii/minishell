@@ -21,26 +21,26 @@ int ft_check_available(char *str)
 void ft_add_last_str(arg_state *strstate, arg_state *state, t_index *index, t_parsend *pstr)
 {
     if (*strstate == FSPACE)
-        ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+        ft_change_agstate_2(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
     if ((*state == SEARCH) && (*strstate == DQUOTE || *strstate == QUOTE ))
     {
        *state = *strstate;
-        ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+        ft_change_agstate_2(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
         if (pstr->str[++index->i])
-            ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+            ft_change_agstate_2(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
     }
     if ((*state == DQUOTE && pstr->str[index->i] == '\"') || (*state == QUOTE && pstr->str[index->i] == '\''))
     {
        *state = SEARCH;
-        ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+        ft_change_agstate_2(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
         if (pstr->str[++index->i])
-            ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+            ft_change_agstate_2(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
     }
     else if (pstr->str[index->i])
     {
         pstr->newstr = ft_realloc(pstr->newstr);
         pstr->newstr[index->j] = pstr->str[index->i];
-        ft_change_agstate(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
+        ft_change_agstate_2(ft_find_cstate(pstr->str[index->i], pstr->str[index->i + 1]), strstate);
         index->j++;
         index->i++;
     }
@@ -60,7 +60,7 @@ char *ft_parsing_end(t_tokens *tokens, char *str)
     pstr.newstr = NULL;
     pstr.str = str;
     if (str[index.i])
-         ft_change_agstate(ft_find_cstate(str[0], str[1]), &strstate);
+         ft_change_agstate_2(ft_find_cstate(str[0], str[1]), &strstate);
     while(str[index.i])
         ft_add_last_str(&strstate, &state, &index, &pstr);
     if(!pstr.newstr)

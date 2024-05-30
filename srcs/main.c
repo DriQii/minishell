@@ -45,16 +45,14 @@ int main(int ac, char **av, char **envp)
     index.k = 0;
     env = ft_calloc(sizeof(char **), 1);
     *env = ft_create_env(envp);
-    tokens = ft_receive_uprompt(ft_print_prompt(), *env);
-    ft_printtabtab(tokens[0].args);
-    //ft_printtabtab(tokens->args);
-   /*  while (index.k != 2)
+    while (index.k != 2)
     {
         index.j = 0;
+        tokens = ft_receive_uprompt(ft_print_prompt(), *env);
         while(tokens[index.j].args)
             ft_prompt_exec(tokens, &index, env, &brulux);
         free(tokens);
-    } */
+    } 
     ft_freetabtab(*env);
     free(env);
     rl_clear_history();
