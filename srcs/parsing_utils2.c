@@ -35,6 +35,27 @@ int    ft_find_arg(char *str, t_arg *arg, t_index *index)
     }
     return (1);
 }
+int    ft_find_arg_2(char *str, t_arg *arg, t_index *index)
+{
+    while(str && str[index->i])
+    {
+        arg->strstate = ft_change_agstate_2(ft_find_cstate_2(str[index->i], str[index->i + 1]), &arg->agstate);
+        if ((arg->strstate == 1 || arg->strstate == 2) && (str[index->i] != 32 || arg->arg))
+            ft_joinarg(arg, str, index);
+        else if (arg->strstate == 3)
+            ft_new_arg(arg, index);
+        index->i++;
+    }
+    if (arg->agstate == FSPACE)
+        return (ft_new_arg(arg, index), 0);
+    else if(index->i == 0)
+    {
+        arg->args = ft_tb_realloc(arg->args);
+        arg->args[index->k] = ft_calloc(sizeof(char), 1);
+        return (0);
+    }
+    return (1);
+}
 
 char    *ft_gnl(char *str)
 {

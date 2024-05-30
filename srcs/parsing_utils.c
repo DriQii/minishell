@@ -1,6 +1,7 @@
 #include "../include/minishell.h"
 
-arg_state ft_find_cstate(char c, char next)
+
+arg_state ft_find_cstate_2(char c, char next)
 {
     if (c == 32 && next != 32)
         return (FSPACE);
@@ -16,7 +17,7 @@ arg_state ft_find_cstate(char c, char next)
         return (SEARCH);
 }
 
-int ft_change_agstate(arg_state cstate, arg_state *agstate)
+int ft_change_agstate_2(arg_state cstate, arg_state *agstate)
 {
     if (*agstate == SEARCH && cstate != DSPACE)
     {
@@ -42,8 +43,57 @@ int ft_change_agstate(arg_state cstate, arg_state *agstate)
     return (2);
 }
 
+arg_state ft_find_cstate(char c, char next)
+{
+    if (c == '>' || (c == '>' &&  next == '>')
+    || c == '<' || (c == '<' &&  next == '<'))
+        return (OP);
+    if (c == 32 && next != 32)
+        return (FSPACE);
+    else if  (c == 0)
+        return (FSPACE);
+    else if (c == 39)
+        return (QUOTE);
+    else if (c == 34)
+        return (DQUOTE);
+    else if (c == 32)
+        return (DSPACE);
+    else
+        return (SEARCH);
+}
+
+int ft_change_agstate(arg_state cstate, arg_state *agstate)
+{
+    if (*agstate == SEARCH && cstate != DSPACE)
+    {
+        if (cstate == DQUOTE || cstate == QUOTE)
+            *agstate = cstate;
+        else if (cstate == OP)
+            *agstate = OP;
+        else
+            *agstate = FSPACE;
+        return (1);
+    }
+    else if (*agstate == SEARCH && cstate == DSPACE)
+        return (0);
+    else if (((cstate == FSPACE || cstate == DSPACE || cstate == OP) && *agstate == FSPACE)
+    || ((cstate == SEARCH  || cstate == DQUOTE || cstate == QUOTE) && *agstate == OP))
+    {
+        *agstate = SEARCH;
+        return (3);
+    }
+    else if ((cstate == DQUOTE && *agstate == DQUOTE) 
+    || (cstate == QUOTE && *agstate == QUOTE))
+        *agstate = FSPACE;
+    else if ((cstate == DQUOTE || cstate == QUOTE) 
+    && (*agstate != DQUOTE && *agstate != QUOTE))
+        *agstate = cstate;
+    return (2);
+}
+
 void    ft_new_arg(t_arg *arg, t_index *index)
 {
+    //printf("ok\n");
     (*arg).args = ft_tb_realloc((*arg).args);
     (*arg).args[(*index).k] = ft_strdup((*arg).arg);
     (*index).k++;

@@ -43,11 +43,12 @@
 
 typedef enum    arg_state
 {
+    FSPACE,
     QUOTE,
     DQUOTE,
-    FSPACE,
     DSPACE,
     SEARCH,
+    OP,
 }               arg_state;
 
 typedef enum    e_flux
@@ -85,9 +86,9 @@ typedef struct  s_index
 
 typedef struct  s_tokens
 {
-    char    *token;
-    char    **args;
-
+    char        *token;
+    char        **args;
+    arg_state   *strstate;
 }               t_tokens;
 
 typedef struct s_var
@@ -134,6 +135,7 @@ int     ft_check_var(char *var, char **var_tab);
 
 int     ft_change_agstate(arg_state cstate, arg_state *agstate);
 int     ft_find_arg(char *str, t_arg *arg, t_index *index);
+int     ft_find_arg_2(char *str, t_arg *arg, t_index *index);
 void    ft_joinarg(t_arg *arg, char *str, t_index *index);
 void    ft_new_arg(t_arg *arg, t_index *index);
 char    *ft_gnl(char *str);
@@ -144,13 +146,14 @@ arg_state ft_find_cstate(char c, char next);
 
 void    ft_vr(char **tb, char **env);
 void    ft_last_parsing(t_tokens *tokens);
-char    *ft_parsing_end(char *str);
+char    *ft_parsing_end(t_tokens *tokens, char *str);
 
 // PARSING
 
 char        *ft_print_prompt();
 char        **ft_tokeniser(char *uprompt, char **env);
 char        **ft_sort_uprompt(char *str);
+char        **ft_sort_uprompt_2(char *str);
 char        **ft_sort_token(char **tb);
 t_tokens    *ft_receive_uprompt(char *uprompt, char **env);
 
@@ -166,12 +169,13 @@ char	**ft_tb_realloc(char **tb);
 
 char    **ft_create_path(char *path, char *cmd);
 void    ft_exec(char *cmd, char **arg, char **env);
-void ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env, t_flux *brulux);
+void    ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env, t_flux *brulux);
 
 // FLUX
 
-char    **ft_checkredirect(char **args, t_flux *flux);
+char    **ft_checkredirect(t_tokens *tokens, t_flux *flux);
 void    ft_change_flux(e_flux *brulux, int savein, int saveout);
-
+arg_state ft_find_cstate_2(char c, char next);
+int ft_change_agstate_2(arg_state cstate, arg_state *agstate);
 
 #endif

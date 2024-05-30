@@ -70,7 +70,7 @@ void    ft_write_err(int saveout, char *str)
     write(saveout, ": No such file or directory\n", ft_strlen(": No such file or directory\n"));
 }
 
-char    **ft_checkredirect(char **args, t_flux *flux)
+/* char    **ft_checkredirect(char **args, t_flux *flux)
 {
     t_index index;
     char    **newargs;
@@ -100,4 +100,36 @@ char    **ft_checkredirect(char **args, t_flux *flux)
         index.i++;
     }
     return (ft_freetabtab(args), newargs);
+} */
+
+char    **ft_checkredirect(t_tokens *tokens, t_flux *flux)
+{
+    t_index index;
+    char    **newargs;
+
+    newargs = NULL;
+    flux->actualflux = INIT;
+    index.j = 0;
+    index.i = 0;
+    index.k = 0;
+    while (tokens->args[index.i])
+    {
+        if (ft_strcmp(tokens->args[index.i], ">>") == 0 || tokens->args[index.i][0] == '>')
+            ft_redirect_flux(tokens->args, &index, flux, 0);
+        else if(tokens->args[index.i][0] == '<' || ft_strcmp(tokens->args[index.i], "<<") == 0)
+        {
+            if (ft_redirect_flux(tokens->args, &index, flux, 1) == ERR)
+                return (ft_write_err(flux->saveout, tokens->args[index.i + 1]), ft_freetabtab(tokens->args), ft_freetabtab(newargs), NULL);
+        }
+        else if (flux->actualflux == INIT && index.k == 0)
+        {
+            newargs = ft_tb_realloc(newargs);
+            if (tokens->args[index.i][0])
+                newargs[index.j++] = ft_strdup(tokens->args[index.i]);
+            else
+                newargs[index.j++] = ft_calloc(sizeof(char), 1);
+        }
+        index.i++;
+    }
+    return (ft_freetabtab(tokens->args), newargs);
 }

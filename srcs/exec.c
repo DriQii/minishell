@@ -2,7 +2,7 @@
 
 void ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env, t_flux *brulux)
 {
-    tokens[index->j].args = ft_checkredirect(tokens[index->j].args, brulux);
+    tokens[index->j].args = ft_checkredirect(tokens, brulux);
     if (tokens[index->j].args == NULL)
         return (ft_change_flux(&brulux->actualflux, brulux->savein, brulux->saveout));
     if(ft_strcmp(tokens[index->j].args[0], "export") == 0)

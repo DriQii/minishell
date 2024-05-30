@@ -45,7 +45,7 @@ void ft_add_last_str(arg_state *strstate, arg_state *state, t_index *index, t_pa
         index->i++;
     }
 }
-char *ft_parsing_end(char *str)
+char *ft_parsing_end(t_tokens *tokens, char *str)
 {
     arg_state   strstate;
     arg_state   state;
@@ -71,16 +71,68 @@ char *ft_parsing_end(char *str)
     return (pstr.newstr);
 }
 
+void   ft_new_state(arg_state *strstate, char c)
+{
+
+    if(*strstate == SEARCH && c == '\'')
+        *strstate = QUOTE;
+    else if(*strstate == SEARCH && c == '\"')
+        *strstate = DQUOTE;
+    else if(*strstate == QUOTE && c == '\'')
+        *strstate = SEARCH;
+    else if(*strstate == DQUOTE && c == '\"')
+        *strstate = SEARCH;
+}
+
+void ft_save_state(t_tokens *tokens)
+{
+    int i;
+    int j;
+    int k;
+    int l;
+    arg_state   strstate;
+    arg_state   *tmpstate;
+
+    i = 0;
+    l = 0;
+    k = 0;
+    strstate = SEARCH;
+    tokens->strstate = NULL;
+    tmpstate = NULL;
+    while(tokens->args[i])
+    {
+        j = 0;
+        while(tokens->args[i][j])
+        {
+            ft_new_state(&strstate, tokens->args[i][j]);
+            tmpstate = tokens->strstate;
+            tokens->strstate = ft_calloc(sizeof(arg_state), k + 2);
+            tokens->strstate[k] = strstate;
+            while(tmpstate && tmpstate[l])
+            {
+                tokens->strstate[l] = tmpstate[l];
+                l++;
+            }
+            l = 0;
+            if (tmpstate)
+                free(tmpstate);
+            k++;
+            j++;
+        }
+        i++;
+    }
+}
+
 void    ft_last_parsing(t_tokens *tokens)
 {
     int i;
-
-    i = 0;
     char *tmp;
     char *tokentmp;
 
+    i = 0;
     tmp = NULL;
     tokentmp = NULL;
+    ft_save_state(tokens);
     while(tokens->args[i])
     {
         tmp = ft_strjoin(tokentmp, tokens->args[i]);
@@ -91,7 +143,7 @@ void    ft_last_parsing(t_tokens *tokens)
         else
             tokentmp = ft_strdup(tmp);
         free(tmp);
-        tokens->args[i] = ft_parsing_end(tokens->args[i]);
+        tokens->args[i] = ft_parsing_end(tokens, tokens->args[i]);
         i++;
     }
     free(tokens->token);
