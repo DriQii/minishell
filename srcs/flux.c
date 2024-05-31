@@ -16,12 +16,37 @@ static e_flux ft_redirect_output(int *fd, char **args, int i)
     return (OUT);
 }
 
+void    ft_heredock(char *end)
+{
+    int pipefd[2];
+    char *str;
+    char *tmp;
+    char *heredoc;
+
+    pipe(pipefd);
+    tmp = NULL;
+    heredoc = NULL;
+    str = get_next_line(0);
+    while (ft_strncmp(str, end, ft_strlen(end) - 1) != 0)
+    {
+        tmp = heredoc;
+        heredoc = ft_strjoin(heredoc, str);
+        if (str)
+            free(str);
+        str = get_next_line(0);
+        if (tmp)
+            free(tmp);
+    }
+    write(pipefd[1], heredoc, ft_strlen(heredoc));
+    close(pipefd[1]);
+    dup2(pipefd[0], STDIN_FILENO);
+    close(pipefd[0]);
+}
+
 static e_flux    ft_redirect_input(int *fd, char **args, int i)
 {
     if (ft_strcmp(args[i], "<<") == 0)
-    {
-        //AFAIRE//
-    }
+        ft_heredock(args[i + 1]);
     else if(args[i][0] == '<' && ft_strlen(args[i]) == 1)
     {
         *fd = open(args[i + 1],  O_RDONLY);
