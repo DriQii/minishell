@@ -58,6 +58,7 @@ typedef enum    e_flux
     ERR,
     INIT,
     INOUT,
+    ERRQ,
 }               e_flux;
 
 typedef struct  s_flux
@@ -122,7 +123,7 @@ char    *ft_get_env(char **env, char *var_name);
 
 char    **ft_create_env(char **envp);
 char    **ft_tab_cat(char **tb, int pos);
-int    ft_builtins_exec(t_tokens token, char ***env);
+int     ft_builtins_exec(t_tokens token, char ***env);
 
 // EXPORT.C
 
@@ -146,7 +147,7 @@ arg_state ft_find_cstate(char c, char next);
 
 void    ft_vr(char **tb, char **env);
 void    ft_last_parsing(t_tokens *tokens);
-char    *ft_parsing_end(t_tokens *tokens, char *str);
+char    *ft_parsing_end( char *str);
 
 // PARSING
 
@@ -170,6 +171,7 @@ char	**ft_tb_realloc(char **tb);
 char    **ft_create_path(char *path, char *cmd);
 void    ft_exec(char *cmd, char **arg, char **env);
 void    ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env, t_flux *brulux);
+char    **ft_export_exec(char **args, char **env);
 
 // FLUX
 

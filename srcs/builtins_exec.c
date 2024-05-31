@@ -65,3 +65,14 @@ char    **ft_tab_cat(char **tb, int pos)
     return (newenv);
 }
 
+char    **ft_export_exec(char **args, char **env)
+{
+    int i;
+
+    i = 0;
+    if (!args[1])
+        env = ft_export(NULL, env);
+    while (args[++i])
+        env = ft_export(args[i], env);
+    return (env);
+}

@@ -2,16 +2,23 @@
 
 void ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env, t_flux *brulux)
 {
+    int i;
+
+    i = 0;
     tokens[index->j].args = ft_checkredirect(tokens, brulux);
     if (tokens[index->j].args == NULL)
         return (ft_change_flux(&brulux->actualflux, brulux->savein, brulux->saveout));
     if(ft_strcmp(tokens[index->j].args[0], "export") == 0)
-        *env = ft_export(tokens[index->j].args[1], *env);
+        *env = ft_export_exec(tokens[index->j].args, *env);
     else if (ft_strcmp(tokens[index->j].args[0], "unset") == 0)
-        *env = ft_unset(tokens[index->j].args[1], *env);
+    {
+        while (tokens[index->j].args[++i])
+            *env = ft_unset(tokens[index->j].args[i], *env);
+    }
     else
         index->k = ft_builtins_exec(tokens[index->j], env);
     ft_freetabtab(tokens[index->j].args);
+    free(tokens[index->j].strstate);
     free(tokens->token);
     if (brulux->actualflux != INIT)
         ft_change_flux(&brulux->actualflux, brulux->savein, brulux->saveout);
