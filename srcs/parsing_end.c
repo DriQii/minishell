@@ -99,7 +99,7 @@ static void ft_save_state(t_tokens *tokens, int x)
     strstate = SEARCH;
     tokens[x].strstate = NULL;
     tmpstate = NULL;
-    while(tokens[x].args[i])
+    while(tokens[x].args && tokens[x].args[i])
     {
         j = 0;
         while(tokens[x].args[i][j])

@@ -8,7 +8,7 @@ int main(int ac, char **av, char **envp)
     t_index     index;
     char        ***env;
     char        *cleararg[] = {"clear", NULL};
-    t_flux        brulux;
+    t_flux      brulux;
 
     brulux.actualfd = 0;
     brulux.saveout = dup(STDOUT_FILENO);
