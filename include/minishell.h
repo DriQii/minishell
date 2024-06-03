@@ -41,6 +41,8 @@
 # define FG_GREEN        "\001\e\033[38;2;0;200;0m\002"
 # define FG_RED            "\001\e\033[38;2;200;70;0m\002"
 
+extern int g_exit;
+
 typedef enum    arg_state
 {
     FSPACE,
@@ -110,10 +112,11 @@ typedef struct s_parsend
 
 // BUILTINS
 
-void     ft_cd(char **args);
-void     ft_echo(t_tokens token);
-char     **ft_unset(char *varname, char **env);
-char    **ft_export(char *var_to_create, char **var_tab);
+void        ft_cd(char **args);
+void        ft_echo(t_tokens token);
+char        **ft_unset(char *varname, char **env);
+char        **ft_export(char *var_to_create, char **var_tab);
+long long    ft_exit(char **args);
 
 // BUILTINS.UTILS
 

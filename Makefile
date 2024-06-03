@@ -10,6 +10,7 @@ DIR_OBJS	=	.objs
 LST_SRCS =	main.c\
 			flux.c\
 			exec.c \
+			exit.c \
 			utils.c \
 			export.c \
 			parsing.c \
