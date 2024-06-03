@@ -90,6 +90,8 @@ typedef struct  s_tokens
     char        *token;
     char        **args;
     arg_state   *strstate;
+    int         nbtokens;
+    int         pipefd[2];
 }               t_tokens;
 
 typedef struct s_var
@@ -175,7 +177,7 @@ char    **ft_export_exec(char **args, char **env);
 
 // FLUX
 
-char    **ft_checkredirect(t_tokens *tokens, t_flux *flux);
+char    **ft_checkredirect(t_tokens *tokens, t_flux *flux, int j);
 void    ft_change_flux(e_flux *brulux, int savein, int saveout);
 arg_state ft_find_cstate_2(char c, char next);
 int ft_change_agstate_2(arg_state cstate, arg_state *agstate);

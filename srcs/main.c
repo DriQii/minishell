@@ -34,6 +34,7 @@ int main(int ac, char **av, char **envp)
     t_tokens    *tokens;
     t_index     index;
     char        ***env;
+    char        *cleararg[] = {"clear", NULL};
     t_flux        brulux;
 
     brulux.actualfd = 0;
@@ -45,6 +46,7 @@ int main(int ac, char **av, char **envp)
     index.k = 0;
     env = ft_calloc(sizeof(char **), 1);
     *env = ft_create_env(envp);
+    ft_exec("clear", cleararg, *env);
     while (index.k != 2)
     {
         index.j = 0;
