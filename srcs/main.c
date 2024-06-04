@@ -25,7 +25,25 @@ int main(int ac, char **av, char **envp)
         index.j = 0;
         tokens = ft_receive_uprompt(ft_print_prompt(), *env);
         while(tokens[index.j].args)
+        {
+            if (tokens[index.j + 1].args)
+            {
+                pipe(tokens[index.j].pipefd);
+                dup2(tokens[index.j].pipefd[1], STDOUT_FILENO);
+                close(tokens[index.j].pipefd[1]);
+            }
+            else if (!tokens[index.j + 1].args && index.j > 0)
+                dup2(brulux.saveout, STDOUT_FILENO);
             ft_prompt_exec(tokens, &index, env, &brulux);
+            if (tokens[index.j + 1].args)
+            {
+                dup2(tokens[index.j].pipefd[0], STDIN_FILENO);
+                close(tokens[index.j].pipefd[0]);
+            }
+            else if (!tokens[index.j + 1].args && index.j > 0)
+                dup2(brulux.savein, STDIN_FILENO);
+            index.j++;
+        }
         free(tokens);
     } 
     ft_freetabtab(*env);

@@ -23,9 +23,7 @@ char    *ft_print_prompt()
     else
         prompt = ft_strdup(tmp);
     free(tmp);
-    write(1, prompt, ft_strlen(prompt));
-    uprompt = get_next_line(0);
-    uprompt[ft_strlen(uprompt) - 1] = 0;
+    uprompt = readline(prompt);
     add_history(uprompt);
     free(prompt);
     return (uprompt);
