@@ -24,7 +24,6 @@ int main(int ac, char **av, char **envp)
     {
         index.j = 0;
         tokens = ft_receive_uprompt(ft_print_prompt(), *env);
-        ft_print_tokens(tokens);
         while(tokens[index.j].token)
         {
             if (tokens[index.j + 1].token)
