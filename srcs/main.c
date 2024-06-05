@@ -2,6 +2,23 @@
 
 int g_exit;
 
+void    ft_handler(int sig)
+{
+    if (sig == SIGINT)
+    {
+        rl_on_new_line();
+        write(1, "\n", 1);
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+    else
+    {
+        rl_on_new_line();
+        rl_redisplay();
+        printf("  \b\b");
+    }
+}
+
 int main(int ac, char **av, char **envp)
 {
     t_tokens    *tokens;
@@ -15,6 +32,8 @@ int main(int ac, char **av, char **envp)
     brulux.savein = dup(STDIN_FILENO);
     (void)ac;
     (void)av;
+    signal(SIGINT, ft_handler);
+    signal(SIGQUIT, ft_handler);
     index.i = 0;
     index.k = -1;
     env = ft_calloc(sizeof(char **), 1);
@@ -49,5 +68,5 @@ int main(int ac, char **av, char **envp)
     ft_freetabtab(*env);
     free(env);
     rl_clear_history();
-    return (0);
+    return (index.k);
 }

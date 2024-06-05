@@ -26,7 +26,10 @@ char    *ft_print_prompt()
     uprompt = readline(prompt);
     add_history(uprompt);
     free(prompt);
-    return (uprompt);
+    if (uprompt)
+        return (uprompt);
+    printf("exit\n");
+    exit(0);
 }
 char    **ft_tokeniser(char *uprompt, char **env)
 {
