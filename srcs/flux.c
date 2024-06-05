@@ -26,7 +26,7 @@ void    ft_heredock(char *end, t_flux *flux)
     pipe(pipefd);
     tmp = NULL;
     heredoc = NULL;
-    write(1, "> ", 2);
+    write(flux->saveout, "> ", 2);
     str = get_next_line(flux->savein);
     while (!(ft_strncmp(str, end, ft_strlen(str) - 1) == 0 && ft_strlen(str) - 1 == ft_strlen(end)))
     {
@@ -34,7 +34,7 @@ void    ft_heredock(char *end, t_flux *flux)
         heredoc = ft_strjoin(heredoc, str);
         if (str)
             free(str);
-        write(1, "> ", 2);
+        write(flux->saveout, "> ", 2);
         str = get_next_line(flux->savein);
         if (tmp)
             free(tmp);
