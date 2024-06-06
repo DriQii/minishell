@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flux.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
+/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:32 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 13:47:31 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:33:00 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,38 +27,6 @@ static t_eflux	ft_redirect_output(int *fd, char **args, int i)
 	return (OUT);
 }
 
-void	ft_heredock(char *end, t_flux *flux)
-{
-	int		pipefd[2];
-	char	*str;
-	char	*tmp;
-	char	*heredoc;
-
-	pipe(pipefd);
-	tmp = NULL;
-	heredoc = NULL;
-	write(flux->saveout, "> ", 2);
-	str = get_next_line(flux->savein);
-	while (!(ft_strncmp(str, end, ft_strlen(str) - 1) == 0 && ft_strlen(str)
-			- 1 == ft_strlen(end)))
-	{
-		tmp = heredoc;
-		heredoc = ft_strjoin(heredoc, str);
-		if (str)
-			free(str);
-		write(flux->saveout, "> ", 2);
-		str = get_next_line(flux->savein);
-		if (tmp)
-			free(tmp);
-	}
-	free(str);
-	write(pipefd[1], heredoc, ft_strlen(heredoc));
-	close(pipefd[1]);
-	dup2(pipefd[0], STDIN_FILENO);
-	close(pipefd[0]);
-	free(heredoc);
-}
-
 static t_eflux	ft_redirect_input(t_flux *flux, char **args, int i)
 {
 	if (ft_strcmp(args[i], "<<") == 0)
@@ -69,15 +37,6 @@ static t_eflux	ft_redirect_input(t_flux *flux, char **args, int i)
 		dup2(flux->actualfd, STDIN_FILENO);
 	}
 	return (IN);
-}
-
-void	ft_change_flux(t_eflux *brulux, int savein, int saveout)
-{
-	if (*brulux == IN || *brulux == INOUT)
-		dup2(savein, STDIN_FILENO);
-	if (*brulux == OUT || *brulux == INOUT)
-		dup2(saveout, STDOUT_FILENO);
-	*brulux = INIT;
 }
 
 static t_eflux	ft_redirect_flux(char **args, t_index *index, t_flux *flux,
@@ -105,26 +64,6 @@ static t_eflux	ft_redirect_flux(char **args, t_index *index, t_flux *flux,
 	}
 	return (IN);
 	index->k = 1;
-}
-
-void	ft_write_err(int saveout, char *str, int err)
-{
-	if (err == 0)
-	{
-		write(saveout, "bash: ", ft_strlen("bash: "));
-		write(saveout, str, ft_strlen(str));
-		write(saveout, ": No such file or directory\n",
-			ft_strlen(": No such file or directory\n"));
-	}
-	else
-	{
-		write(saveout, "bash: invalid redirection \'",
-			ft_strlen("bash: invalid redirection \'"));
-		write(saveout, &str[0], 1);
-		if (str[1] == str[0])
-			write(saveout, &str[1], 1);
-		write(saveout, "\'\n", 2);
-	}
 }
 
 char	**ft_checkredirect(t_tokens *tokens, t_flux *flux, int j)

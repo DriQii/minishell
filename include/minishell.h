@@ -191,9 +191,11 @@ char		**ft_export_exec(char **args, char **env);
 
 // FLUX
 
+int			ft_change_agstate_2(t_arg_state cstate, t_arg_state *agstate);
 char		**ft_checkredirect(t_tokens *tokens, t_flux *flux, int j);
 void		ft_change_flux(t_eflux *brulux, int savein, int saveout);
+void		ft_heredock(char *end, t_flux *flux);
+void		ft_write_err(int saveout, char *str, int err);
 t_arg_state	ft_find_cstate_2(char c, char next);
-int			ft_change_agstate_2(t_arg_state cstate, t_arg_state *agstate);
 
 #endif
