@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:54:18 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 15:57:58 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	ft_clear(char **env)
 	cleararg = (char **)malloc(sizeof(char *) * 2);
 	cleararg[0] = ft_strdup("clear");
 	ft_exec("clear", cleararg, env);
+	ft_freetabtab(cleararg);
 }
 
 int	main(int ac, char **av, char **envp)
