@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:41 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:23:29 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 15:55:46 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ char	*ft_join_space(char *s1, char *s2)
 	char	sp[2];
 
 	sp[0] = ' ';
+	sp[1] = '\0';
 	if (!s1)
 		return (ft_strdup(s2));
 	newstr = ft_strjoin(s1, sp);
