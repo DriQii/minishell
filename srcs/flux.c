@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flux.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:32 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:40:31 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 13:47:31 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_eflux	ft_redirect_input(t_flux *flux, char **args, int i)
 	return (IN);
 }
 
-void	ft_changt_eflux(t_eflux *brulux, int savein, int saveout)
+void	ft_change_flux(t_eflux *brulux, int savein, int saveout)
 {
 	if (*brulux == IN || *brulux == INOUT)
 		dup2(savein, STDIN_FILENO);

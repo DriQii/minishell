@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_end.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:38 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:26:39 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 13:45:19 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_check_available(char *str)
 	return (j);
 }
 
-void	ft_add_last_str(arg_state *strstate, arg_state *state, t_index *index,
+void	ft_add_last_str(t_arg_state *strstate, t_arg_state *state, t_index *index,
 		t_parsend *pstr)
 {
 	if (*strstate == FSPACE)
@@ -67,8 +67,8 @@ void	ft_add_last_str(arg_state *strstate, arg_state *state, t_index *index,
 }
 char	*ft_parsing_end(char *str)
 {
-	arg_state	strstate;
-	arg_state	state;
+	t_arg_state	strstate;
+	t_arg_state	state;
 	t_parsend	pstr;
 	t_index		index;
 

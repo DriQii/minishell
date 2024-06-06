@@ -64,7 +64,7 @@ typedef enum e_arg_state
 	OP,
 }				t_arg_state;
 
-typedef enum	e_flux
+typedef enum e_flux
 {
 	IN,
 	OUT,
@@ -74,15 +74,15 @@ typedef enum	e_flux
 	ERRQ,
 }				t_eflux;
 
-typedef struct  s_flux
+typedef struct s_flux
 {
-	int savein;
-	int saveout;
-	int actualfd;
+	int		savein;
+	int		saveout;
+	int		actualfd;
 	t_eflux	actualflux;
 }			   t_flux;
 
-typedef struct  s_arg
+typedef struct s_arg
 {
 	char		**args;
 	char		*arg;
@@ -90,7 +90,7 @@ typedef struct  s_arg
 	t_arg_state   agstate;
 }			   t_arg;
 
-typedef struct  s_index
+typedef struct s_index
 {
 	int i;
 	int j;
@@ -98,7 +98,7 @@ typedef struct  s_index
 	int l;
 }			   t_index;
 
-typedef struct  s_tokens
+typedef struct s_tokens
 {
 	char		*token;
 	char		**args;
