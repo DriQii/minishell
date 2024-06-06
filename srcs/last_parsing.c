@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   last_parsing.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 15:26:34 by evella            #+#    #+#             */
+/*   Updated: 2024/06/06 15:41:22 by evella           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
-void	ft_new_state(arg_state *strstate, char c)
+void	ft_new_state(t_arg_state *strstate, char c)
 {
 	if (*strstate == SEARCH && c == '\'')
 		*strstate = QUOTE;
@@ -13,7 +25,7 @@ void	ft_new_state(arg_state *strstate, char c)
 }
 
 static void	ft_save_state_2(t_tokens *tokens, int x, t_index *index,
-		arg_state *tmpstate)
+		t_arg_state *tmpstate)
 {
 	while (tmpstate && tmpstate[index->l])
 	{
@@ -30,8 +42,8 @@ static void	ft_save_state_2(t_tokens *tokens, int x, t_index *index,
 static void	ft_save_state(t_tokens *tokens, int x)
 {
 	t_index		index;
-	arg_state	strstate;
-	arg_state	*tmpstate;
+	t_arg_state	strstate;
+	t_arg_state	*tmpstate;
 
 	index.i = 0;
 	index.l = 0;
@@ -46,7 +58,7 @@ static void	ft_save_state(t_tokens *tokens, int x)
 		{
 			ft_new_state(&strstate, tokens[x].args[index.i][index.j]);
 			tmpstate = tokens[x].strstate;
-			tokens[x].strstate = ft_calloc(sizeof(arg_state), index.k + 2);
+			tokens[x].strstate = ft_calloc(sizeof(t_arg_state), index.k + 2);
 			tokens[x].strstate[index.k] = strstate;
 			ft_save_state_2(tokens, x, &index, tmpstate);
 		}

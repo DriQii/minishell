@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 15:26:41 by evella            #+#    #+#             */
+/*   Updated: 2024/06/06 15:41:08 by evella           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
-arg_state	ft_find_cstate_2(char c, char next)
+t_arg_state	ft_find_cstate_2(char c, char next)
 {
 	if (c == 32 && next != 32)
 		return (FSPACE);
@@ -16,7 +28,7 @@ arg_state	ft_find_cstate_2(char c, char next)
 		return (SEARCH);
 }
 
-int	ft_change_agstate_2(arg_state cstate, arg_state *agstate)
+int	ft_change_agstate_2(t_arg_state cstate, t_arg_state *agstate)
 {
 	if (*agstate == SEARCH && cstate != DSPACE)
 	{
@@ -42,7 +54,7 @@ int	ft_change_agstate_2(arg_state cstate, arg_state *agstate)
 	return (2);
 }
 
-arg_state	ft_find_cstate(char c, char next)
+t_arg_state	ft_find_cstate(char c, char next)
 {
 	if (c == '|' || c == '>' || (c == '>' && next == '>') || c == '<'
 		|| (c == '<' && next == '<'))
@@ -61,7 +73,7 @@ arg_state	ft_find_cstate(char c, char next)
 		return (SEARCH);
 }
 
-int	ft_change_agstate(arg_state cstate, arg_state *agstate, int j)
+int	ft_change_agstate(t_arg_state cstate, t_arg_state *agstate, int j)
 {
 	if ((*agstate == SEARCH && cstate != DSPACE) || (*agstate == FSPACE
 			&& cstate == OP))

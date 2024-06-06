@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 15:26:27 by evella            #+#    #+#             */
+/*   Updated: 2024/06/06 15:40:40 by evella           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env,
@@ -8,7 +20,7 @@ void	ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env,
 	i = 0;
 	tokens[index->j].args = ft_checkredirect(tokens, brulux, index->j);
 	if (tokens[index->j].args == NULL)
-		return (ft_change_flux(&brulux->actualflux, brulux->savein,
+		return (ft_changt_eflux(&brulux->actualflux, brulux->savein,
 				brulux->saveout));
 	if (ft_strcmp(tokens[index->j].args[0], "export") == 0)
 		*env = ft_export_exec(tokens[index->j].args, *env);
@@ -23,7 +35,7 @@ void	ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env,
 	free(tokens[index->j].strstate);
 	free(tokens[index->j].token);
 	if (brulux->actualflux != INIT)
-		ft_change_flux(&brulux->actualflux, brulux->savein, brulux->saveout);
+		ft_changt_eflux(&brulux->actualflux, brulux->savein, brulux->saveout);
 }
 
 char	**ft_create_path(char *path, char *cmd)

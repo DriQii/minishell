@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
+/*   Updated: 2024/06/06 15:31:45 by evella           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 int		g_exit;
@@ -68,7 +80,7 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGQUIT, ft_handler);
 	env = ft_calloc(sizeof(char **), 1);
 	*env = ft_create_env(envp);
-	// ft_exec("clear", cleararg, *env);
+	ft_exec("clear", cleararg, *env);
 	ft_minishell(tokens, &index, &brulux, env);
 	ft_freetabtab(*env);
 	free(env);

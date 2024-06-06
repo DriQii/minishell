@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_env.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 15:26:39 by evella            #+#    #+#             */
+/*   Updated: 2024/06/06 15:41:11 by evella           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 char	*ft_get_var(char *str, int *i, int *j, char **env)
@@ -50,7 +62,7 @@ char	*ft_swap_var(char *str, char **env)
 {
 	t_var		var;
 	t_index		index;
-	arg_state	strstate;
+	t_arg_state	strstate;
 
 	index.i = 0;
 	index.j = 0;

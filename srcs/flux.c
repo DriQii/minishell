@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flux.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 15:26:32 by evella            #+#    #+#             */
+/*   Updated: 2024/06/06 15:40:31 by evella           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
-static e_flux	ft_redirect_output(int *fd, char **args, int i)
+static t_eflux	ft_redirect_output(int *fd, char **args, int i)
 {
 	if (ft_strcmp(args[i], ">>") == 0)
 	{
@@ -47,7 +59,7 @@ void	ft_heredock(char *end, t_flux *flux)
 	free(heredoc);
 }
 
-static e_flux	ft_redirect_input(t_flux *flux, char **args, int i)
+static t_eflux	ft_redirect_input(t_flux *flux, char **args, int i)
 {
 	if (ft_strcmp(args[i], "<<") == 0)
 		ft_heredock(args[i + 1], flux);
@@ -59,7 +71,7 @@ static e_flux	ft_redirect_input(t_flux *flux, char **args, int i)
 	return (IN);
 }
 
-void	ft_change_flux(e_flux *brulux, int savein, int saveout)
+void	ft_changt_eflux(t_eflux *brulux, int savein, int saveout)
 {
 	if (*brulux == IN || *brulux == INOUT)
 		dup2(savein, STDIN_FILENO);
@@ -68,7 +80,7 @@ void	ft_change_flux(e_flux *brulux, int savein, int saveout)
 	*brulux = INIT;
 }
 
-static e_flux	ft_redirect_flux(char **args, t_index *index, t_flux *flux,
+static t_eflux	ft_redirect_flux(char **args, t_index *index, t_flux *flux,
 		int state)
 {
 	if (ft_strlen(args[index->i]) > 2 || !args[index->i + 1])
@@ -119,7 +131,7 @@ char	**ft_checkredirect(t_tokens *tokens, t_flux *flux, int j)
 {
 	t_index	index;
 	char	**newargs;
-	e_flux	af;
+	t_eflux	af;
 
 	newargs = NULL;
 	flux->actualflux = INIT;
