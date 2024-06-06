@@ -6,7 +6,7 @@
 /*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:18 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:26:19 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:24:08 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**ft_tab_cat(char **tb, int pos)
 
 char	**ft_export_exec(char **args, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!args[1])

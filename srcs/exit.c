@@ -6,7 +6,7 @@
 /*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:29 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:26:30 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:23:52 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	ft_check_args_exit(char *arg)
 	}
 	return (0);
 }
+
 long long	ft_exit(char **args)
 {
 	long long	n;

@@ -6,7 +6,7 @@
 /*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:44 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:26:45 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:20:17 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	ft_find_arg(char *str, t_arg *arg, t_index *index)
 	}
 	return (1);
 }
+
 int	ft_find_arg_2(char *str, t_arg *arg, t_index *index)
 {
 	while (str && str[index->i])

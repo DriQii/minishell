@@ -6,53 +6,11 @@
 /*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:41 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:41:08 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:23:29 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_arg_state	ft_find_cstate_2(char c, char next)
-{
-	if (c == 32 && next != 32)
-		return (FSPACE);
-	else if (c == 0)
-		return (FSPACE);
-	else if (c == 39)
-		return (QUOTE);
-	else if (c == 34)
-		return (DQUOTE);
-	else if (c == 32)
-		return (DSPACE);
-	else
-		return (SEARCH);
-}
-
-int	ft_change_agstate_2(t_arg_state cstate, t_arg_state *agstate)
-{
-	if (*agstate == SEARCH && cstate != DSPACE)
-	{
-		if (cstate == DQUOTE || cstate == QUOTE)
-			*agstate = cstate;
-		else
-			*agstate = FSPACE;
-		return (1);
-	}
-	else if (*agstate == SEARCH && cstate == DSPACE)
-		return (0);
-	else if ((cstate == FSPACE || cstate == DSPACE) && *agstate == FSPACE)
-	{
-		*agstate = SEARCH;
-		return (3);
-	}
-	else if ((cstate == DQUOTE && *agstate == DQUOTE) || (cstate == QUOTE
-			&& *agstate == QUOTE))
-		*agstate = FSPACE;
-	else if ((cstate == DQUOTE || cstate == QUOTE) && (*agstate != DQUOTE
-			&& *agstate != QUOTE))
-		*agstate = cstate;
-	return (2);
-}
 
 t_arg_state	ft_find_cstate(char c, char next)
 {
@@ -119,6 +77,7 @@ void	ft_new_arg(t_arg *arg, t_index *index)
 	free((*arg).arg);
 	(*arg).arg = NULL;
 }
+
 void	ft_joinarg(t_arg *arg, char *str, t_index *index)
 {
 	(*arg).arg = ft_realloc((*arg).arg);
@@ -129,8 +88,9 @@ void	ft_joinarg(t_arg *arg, char *str, t_index *index)
 char	*ft_join_space(char *s1, char *s2)
 {
 	char	*newstr;
-	char	sp[] = {" "};
+	char	sp[2];
 
+	sp[0] = ' ';
 	if (!s1)
 		return (ft_strdup(s2));
 	newstr = ft_strjoin(s1, sp);

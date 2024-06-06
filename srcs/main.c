@@ -6,7 +6,7 @@
 /*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:31:45 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:28:35 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_handler(int sig)
 		printf("  \b\b");
 	}
 }
+
 void	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 		char ***env)
 {
@@ -60,12 +61,21 @@ void	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 	}
 }
 
+void	ft_clear(char **env)
+{
+	char	**cleararg;
+
+	cleararg = NULL;
+	ft_tb_realloc(cleararg);
+	cleararg[0] = ft_strdup("clear");
+	ft_exec("clear", cleararg, *env);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_tokens	*tokens;
 	t_index		index;
 	char		***env;
-	char		*cleararg[] = {"clear", NULL};
 	t_flux		brulux;
 
 	(void)ac;
@@ -80,7 +90,7 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGQUIT, ft_handler);
 	env = ft_calloc(sizeof(char **), 1);
 	*env = ft_create_env(envp);
-	ft_exec("clear", cleararg, *env);
+	ft_clear(*env);
 	ft_minishell(tokens, &index, &brulux, env);
 	ft_freetabtab(*env);
 	free(env);
