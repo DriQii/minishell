@@ -14,6 +14,7 @@ LST_SRCS =	main.c\
 			utils.c \
 			export.c \
 			parsing.c \
+			parsing2.c \
 			builtins.c \
 			parsing_env.c \
 			parsing_end.c \
@@ -40,7 +41,7 @@ $(DIR_OBJS)/%.o : $(DIR_SRCS)/%.c
 	@mkdir -p .objs
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@printf "$(BLUE) > Compilation :$(END) $<\n"
-	
+
 
 $(NAME) :   $(OBJS)
 	@printf "$(GREEN).c are compiled\n$(END)"
@@ -59,5 +60,5 @@ fclean  :   clean
 	@printf "$(YELLOW)Minishell removed$(END)\n"
 	@make fclean -C libft
 	@rm -f $(NAME)
-	
+
 re      :   fclean all

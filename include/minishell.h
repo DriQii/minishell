@@ -80,46 +80,45 @@ typedef struct s_flux
 	int		saveout;
 	int		actualfd;
 	t_eflux	actualflux;
-}			   t_flux;
+}				t_flux;
 
 typedef struct s_arg
 {
 	char		**args;
 	char		*arg;
-	int		 strstate;
-	t_arg_state   agstate;
-}			   t_arg;
+	int			strstate;
+	t_arg_state	agstate;
+}				t_arg;
 
 typedef struct s_index
 {
-	int i;
-	int j;
-	int k;
-	int l;
-}			   t_index;
+	int	i;
+	int	j;
+	int	k;
+	int	l;
+}				t_index;
 
 typedef struct s_tokens
 {
 	char		*token;
 	char		**args;
-	t_arg_state   *strstate;
-	int		 nbtokens;
-	int		 pipefd[2];
-}			   t_tokens;
+	t_arg_state	*strstate;
+	int			nbtokens;
+	int			pipefd[2];
+}				t_tokens;
 
 typedef struct s_var
 {
 	char	*newstr;
 	char	*var;
 	char	*tmp;
-}			   t_var;
+}				t_var;
 
 typedef struct s_parsend
 {
 	char	*newstr;
 	char	*str;
-}			   t_parsend;
-
+}				t_parsend;
 
 // BUILTINS
 
@@ -131,43 +130,43 @@ long long	ft_exit(char **args);
 
 // BUILTINS.UTILS
 
-void	ft_check_env(char *str);
-char	*ft_cutdir(char *path , char *arg);
-char	*ft_get_env(char **env, char *var_name);
+void		ft_check_env(char *str);
+char		*ft_cutdir(char *path, char *arg);
+char		*ft_get_env(char **env, char *var_name);
 
 // BUILTINS.EXEC
 
-char	**ft_create_env(char **envp);
-char	**ft_tab_cat(char **tb, int pos);
-int	 ft_builtins_exec(t_tokens token, char ***env);
+char		**ft_create_env(char **envp);
+char		**ft_tab_cat(char **tb, int pos);
+int			ft_builtins_exec(t_tokens token, char ***env);
 
 // EXPORT.C
 
-void	ft_bubble_export(char **var_tab);
-void	ft_swap_str(char **var_tab, int j);
-void	ft_display_export(char **export_tab);
-int	 ft_check_var(char *var, char **var_tab);
+void		ft_bubble_export(char **var_tab);
+void		ft_swap_str(char **var_tab, int j);
+void		ft_display_export(char **export_tab);
+int			ft_check_var(char *var, char **var_tab);
 
 // PARSING.UTILS
 
-int	 ft_change_agstate(t_arg_state cstate, t_arg_state *agstate, int j);
-int	 ft_find_arg(char *str, t_arg *arg, t_index *index);
-int	 ft_find_arg_2(char *str, t_arg *arg, t_index *index);
-void	ft_joinarg(t_arg *arg, char *str, t_index *index);
-void	ft_new_arg(t_arg *arg, t_index *index);
-char	*ft_gnl(char *str);
-char	*ft_join_space(char *s1, char *s2);
-t_arg_state ft_find_cstate(char c, char next);
+int			ft_change_agstate(t_arg_state cstate, t_arg_state *agstate, int j);
+int			ft_find_arg(char *str, t_arg *arg, t_index *index);
+int			ft_find_arg_2(char *str, t_arg *arg, t_index *index);
+void		ft_joinarg(t_arg *arg, char *str, t_index *index);
+void		ft_new_arg(t_arg *arg, t_index *index);
+char		*ft_gnl(char *str);
+char		*ft_join_space(char *s1, char *s2);
+t_arg_state	ft_find_cstate(char c, char next);
 
 // PARSING.ENV
 
-void	ft_vr(char **tb, char **env);
-void	ft_last_parsing(t_tokens *tokens);
-char	*ft_parsing_end( char *str);
+void		ft_vr(char **tb, char **env);
+void		ft_last_parsing(t_tokens *tokens);
+char		*ft_parsing_end( char *str);
 
 // PARSING
 
-char		*ft_print_prompt();
+char		*ft_print_prompt(void);
 char		**ft_tokeniser(char *uprompt, char **env);
 char		**ft_sort_uprompt(char *str);
 char		**ft_sort_uprompt_2(char *str);
@@ -176,24 +175,25 @@ t_tokens	*ft_receive_uprompt(char *uprompt, char **env);
 
 // UTILS
 
-void	ft_print_tokens(t_tokens *tokens);
-void	ft_printtabtab(char **tb);
-void	*ft_freetabtab(char **tb);
-char	*ft_realloc(char *str);
-char	**ft_tb_realloc(char **tb);
+void		ft_print_tokens(t_tokens *tokens);
+void		ft_printtabtab(char **tb);
+void		*ft_freetabtab(char **tb);
+char		*ft_realloc(char *str);
+char		**ft_tb_realloc(char **tb);
 
 // EXEC
 
-char	**ft_create_path(char *path, char *cmd);
-void	ft_exec(char *cmd, char **arg, char **env);
-void	ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env, t_flux *brulux);
-char	**ft_export_exec(char **args, char **env);
+char		**ft_create_path(char *path, char *cmd);
+void		ft_exec(char *cmd, char **arg, char **env);
+void		ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env,
+				t_flux *brulux);
+char		**ft_export_exec(char **args, char **env);
 
 // FLUX
 
-char	**ft_checkredirect(t_tokens *tokens, t_flux *flux, int j);
-void	ft_change_flux(t_eflux *brulux, int savein, int saveout);
-t_arg_state ft_find_cstate_2(char c, char next);
-int ft_change_agstate_2(t_arg_state cstate, t_arg_state *agstate);
+char		**ft_checkredirect(t_tokens *tokens, t_flux *flux, int j);
+void		ft_change_flux(t_eflux *brulux, int savein, int saveout);
+t_arg_state	ft_find_cstate_2(char c, char next);
+int			ft_change_agstate_2(t_arg_state cstate, t_arg_state *agstate);
 
 #endif

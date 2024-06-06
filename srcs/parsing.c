@@ -6,7 +6,7 @@
 /*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:46 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:26:47 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:06:46 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,9 @@ char	*ft_print_prompt(void)
 	char	*prompt;
 	char	*uprompt;
 	char	*tmp;
-	int		i;
 
 	prompt = ft_strjoin(getcwd(buff, 4096), DEF " > " DEF);
-	i = 6;
-	while (prompt[i] && prompt[i] != '/')
-		i++;
-	tmp = ft_strdup(&prompt[i]);
+	tmp = ft_strdup(ft_strchr(prompt + 6, '/'));
 	free(prompt);
 	prompt = ft_strjoin(BOLD_GREEN "︻╦╤─~" BOLD_BLUE, tmp);
 	free(tmp);
@@ -42,68 +38,6 @@ char	*ft_print_prompt(void)
 		return (uprompt);
 	printf("exit\n");
 	exit(0);
-}
-char	**ft_tokeniser(char *uprompt, char **env)
-{
-	char	**tb;
-	char	**tokens;
-
-	tb = NULL;
-	tb = ft_sort_uprompt(uprompt);
-	ft_vr(tb, env);
-	free(uprompt);
-	tokens = ft_sort_token(tb);
-	return (tokens);
-}
-
-t_tokens	*ft_receive_uprompt(char *uprompt, char **env)
-{
-	t_tokens	*tokens;
-	char		**tmpt;
-	int			i;
-
-	i = 0;
-	tmpt = ft_tokeniser(uprompt, env);
-	while (tmpt[i])
-		i++;
-	tokens = ft_calloc(sizeof(*tokens), i + 1);
-	tokens[0].nbtokens = i;
-	i = 0;
-	while (tmpt[i])
-	{
-		tokens[i].token = ft_strdup(tmpt[i]);
-		tokens[i].args = ft_sort_uprompt_2(tmpt[i]);
-		i++;
-	}
-	ft_last_parsing(tokens);
-	ft_freetabtab(tmpt);
-	return (tokens);
-}
-
-char	**ft_sort_uprompt(char *str)
-{
-	t_index	index;
-	t_arg	arg;
-	char	*newstr;
-	int		l;
-
-	index.i = 0;
-	index.j = 0;
-	index.k = 0;
-	l = 1;
-	arg.agstate = SEARCH;
-	arg.args = NULL;
-	arg.arg = NULL;
-	newstr = ft_strdup(str);
-	while (l)
-	{
-		l = ft_find_arg(newstr, &arg, &index);
-		if (l == 1)
-			newstr = ft_gnl(newstr);
-	}
-	if (newstr)
-		free(newstr);
-	return (arg.args);
 }
 
 char	**ft_sort_uprompt_2(char *str)
@@ -131,6 +65,31 @@ char	**ft_sort_uprompt_2(char *str)
 		free(newstr);
 	return (arg.args);
 }
+
+t_tokens	*ft_receive_uprompt(char *uprompt, char **env)
+{
+	t_tokens	*tokens;
+	char		**tmpt;
+	int			i;
+
+	i = 0;
+	tmpt = ft_tokeniser(uprompt, env);
+	while (tmpt[i])
+		i++;
+	tokens = ft_calloc(sizeof(*tokens), i + 1);
+	tokens[0].nbtokens = i;
+	i = 0;
+	while (tmpt[i])
+	{
+		tokens[i].token = ft_strdup(tmpt[i]);
+		tokens[i].args = ft_sort_uprompt_2(tmpt[i]);
+		i++;
+	}
+	ft_last_parsing(tokens);
+	ft_freetabtab(tmpt);
+	return (tokens);
+}
+
 
 char	**ft_sort_token(char **tb)
 {
