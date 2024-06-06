@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:28:35 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 14:38:20 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_clear(char **env)
 	cleararg = NULL;
 	ft_tb_realloc(cleararg);
 	cleararg[0] = ft_strdup("clear");
-	ft_exec("clear", cleararg, *env);
+	ft_exec("clear", cleararg, env);
 }
 
 int	main(int ac, char **av, char **envp)

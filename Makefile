@@ -7,10 +7,11 @@ NAME = minishell
 DIR_SRCS	=	srcs
 DIR_OBJS	=	.objs
 
-LST_SRCS =	main.c\
-			flux.c\
+LST_SRCS =	main.c \
+			flux.c \
 			exec.c \
 			exit.c \
+			flux2.c \
 			utils.c \
 			export.c \
 			parsing.c \
