@@ -6,7 +6,7 @@
 /*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:39 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:41:11 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:09:04 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static char	*ft_realloc_newstr(char *newstr, char *str, t_index *index)
 	index->i++;
 	return (newstr);
 }
+
 void	ft_add_var(t_var *var, int *k)
 {
 	var->tmp = ft_strjoin(var->newstr, var->var);
@@ -84,8 +85,7 @@ char	*ft_swap_var(char *str, char **env)
 		else
 			var.newstr = ft_realloc_newstr(var.newstr, str, &index);
 	}
-	free(str);
-	return (var.newstr);
+	return (free(str), var.newstr);
 }
 
 void	ft_vr(char **tb, char **env)

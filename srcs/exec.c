@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
+/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:27 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 13:47:21 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:16:45 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,35 +65,37 @@ char	**ft_create_path(char *path, char *cmd)
 	return (tbpath);
 }
 
-void	ft_exec(char *cmd, char **arg, char **env)
+void	ft_child_exec(char *cmd, char **arg, char **env)
 {
-	char	**path;
-	pid_t	pid;
-	int		status;
 	int		execr;
 	int		i;
+	char	**path;
 
 	i = 0;
-	execr = -1;
 	path = ft_create_path(getenv("PATH"), cmd);
+	execr = access(path[0], X_OK);
+	while (execr == -1 && path[++i])
+		execr = access(path[i], X_OK);
+	if (execr == -1)
+		printf("bash: %s: command not found\n", cmd);
+	else
+		execve(path[i], arg, env);
+	ft_freetabtab(path);
+	ft_freetabtab(env);
+	ft_freetabtab(arg);
+	exit(0);
+}
+
+void	ft_exec(char *cmd, char **arg, char **env)
+{
+	pid_t	pid;
+	int		status;
+
 	pid = fork();
 	if (pid == 0)
-	{
-		execr = access(path[0], X_OK);
-		while (execr == -1 && path[++i])
-			execr = access(path[i], X_OK);
-		if (execr == -1)
-			printf("bash: %s: command not found\n", cmd);
-		else
-			execve(path[i], arg, env);
-		ft_freetabtab(path);
-		ft_freetabtab(env);
-		ft_freetabtab(arg);
-		exit(0);
-	}
+		ft_child_exec(cmd, arg, env);
 	else
 	{
-		ft_freetabtab(path);
 		wait(&status);
 		if (WIFEXITED(status))
 			g_exit = WEXITSTATUS(status);

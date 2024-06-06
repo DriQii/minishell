@@ -6,7 +6,7 @@
 /*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:34 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:41:22 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:10:07 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ static void	ft_last_parsing_2(char **tokentmp, t_tokens *tokens, t_index *index)
 		else
 			*tokentmp = ft_strdup(tmp);
 		free(tmp);
-		tokens[index->j].args[index->i] = ft_parsing_end(tokens[index->j].args[index->i]);
+		tokens[index->j].args[index->i] = ft_parsing_end
+			(tokens[index->j].args[index->i]);
 		index->i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:46 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:06:46 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:08:32 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ t_tokens	*ft_receive_uprompt(char *uprompt, char **env)
 	ft_freetabtab(tmpt);
 	return (tokens);
 }
-
 
 char	**ft_sort_token(char **tb)
 {
