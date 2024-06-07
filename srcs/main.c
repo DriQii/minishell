@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 13:48:24 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:57:11 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,30 +74,30 @@ static int	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 	return (tmp);
 }
 
-int	main(int ac, char **av, char **envp)
+int    main(int ac, char **av, char **envp)
 {
-	t_tokens	*tokens;
-	t_index		index;
-	char		***env;
-	t_flux		brulux;
+    t_tokens    *tokens;
+    t_index        index;
+    char        ***env;
+    t_flux        brulux;
+    char        *tmp;
 
-	(void)ac;
-	(void)av;
-	index.i = 0;
-	index.k = -1;
-	tokens = NULL;
-	brulux.actualfd = 0;
-	brulux.saveout = dup(STDOUT_FILENO);
-	brulux.savein = dup(STDIN_FILENO);
-	signal(SIGINT, ft_handler);
-	signal(SIGQUIT, ft_handler);
-	env = ft_calloc(sizeof(char **), 1);
-	*env = ft_create_env(envp);
-	*env = ft_shlvl(*env, ft_atoi(ft_get_env(*env, "SHLVL")));
-	ft_clear(*env);
-	index.r = ft_minishell(tokens, &index, &brulux, env);
-	ft_freetabtab(*env);
-	free(env);
-	rl_clear_history();
-	return (index.r);
+    (void)ac;
+    (void)av;
+    index.i = 0;
+    index.k = -1;
+    tokens = NULL;
+    brulux.actualfd = 0;
+    brulux.saveout = dup(STDOUT_FILENO);
+    brulux.savein = dup(STDIN_FILENO);
+    signal(SIGINT, ft_handler);
+    signal(SIGQUIT, ft_handler);
+    env = ft_calloc(sizeof(char **), 1);
+    *env = ft_create_env(envp);
+    tmp = ft_get_env(*env, "SHLVL");
+    *env = ft_shlvl(*env, ft_atoi(tmp));
+    ft_clear(*env);
+    index.r = ft_minishell(tokens, &index, &brulux, env);
+    rl_clear_history();
+    return (ft_freetabtab(*env), free(env), free(tmp), index.r);
 }
