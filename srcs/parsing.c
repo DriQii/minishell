@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:46 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 10:47:52 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 12:07:20 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ char	*ft_print_prompt(void)
 	free(prompt);
 	if (uprompt)
 		return (uprompt);
-	printf("exit\n");
-	exit(0);
+	return (NULL);
 }
 
 char	**ft_sort_uprompt_2(char *str)
@@ -72,6 +71,8 @@ t_tokens	*ft_receive_uprompt(char *uprompt, char **env, int *rexit)
 	char		**tmpt;
 	int			i;
 
+	if (!uprompt)
+		return (NULL);
 	i = 0;
 	tmpt = ft_tokeniser(uprompt, env, rexit);
 	while (tmpt[i])

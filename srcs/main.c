@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 10:52:18 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 12:08:35 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 	{
 		index->j = -1;
 		tokens = ft_receive_uprompt(ft_print_prompt(), *env, &tmp);
+		if (tokens == NULL)
+			return(tmp);
 		while (tokens[++index->j].token)
 		{
 			if (tokens[index->j + 1].token)
