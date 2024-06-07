@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:04:27 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:44:37 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 16:35:49 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_sort_uprompt(char *str)
 
 t_arg_state	ft_find_cstate_2(char c, char next)
 {
-	if (c == 32 && next != 32)
+	if ((c == 32 || c == 9) && (next != 32 && next != 9))
 		return (FSPACE);
 	else if (c == 0)
 		return (FSPACE);
@@ -61,7 +61,7 @@ t_arg_state	ft_find_cstate_2(char c, char next)
 		return (QUOTE);
 	else if (c == 34)
 		return (DQUOTE);
-	else if (c == 32)
+	else if (c == 32 || c == 9)
 		return (DSPACE);
 	else
 		return (SEARCH);

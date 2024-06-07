@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:41 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 13:11:47 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 17:08:19 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ t_arg_state	ft_find_cstate(char c, char next)
 	if (c == '|' || c == '>' || (c == '>' && next == '>') || c == '<'
 		|| (c == '<' && next == '<'))
 		return (OP);
-	if (c == 32 && next != 32)
+	if ((c == 32 || c == '\n' || c == '\t') 
+	&& (next != 32 && next != '\n' && next != '\t'))
 		return (FSPACE);
 	else if (c == 0)
 		return (FSPACE);
@@ -25,7 +26,7 @@ t_arg_state	ft_find_cstate(char c, char next)
 		return (QUOTE);
 	else if (c == 34)
 		return (DQUOTE);
-	else if (c == 32)
+	else if (c == 32 || c == '\n')
 		return (DSPACE);
 	else
 		return (SEARCH);
