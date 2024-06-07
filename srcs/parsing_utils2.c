@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:44 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:20:17 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:51:51 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,18 @@ char	*ft_gnl(char *str)
 	if (tmp2)
 		free(tmp2);
 	return (str);
+}
+
+char	**ft_shlvl(char **env, int shlvl)
+{
+	char	*tmp;
+	char	*str;
+
+	shlvl++;
+	str = ft_itoa(shlvl);
+	tmp = ft_strjoin("SHLVL=", str);
+	env = ft_export(tmp, env);
+	free(tmp);
+	free(str);
+	return (env);
 }

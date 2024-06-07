@@ -156,6 +156,7 @@ void		ft_joinarg(t_arg *arg, char *str, t_index *index);
 void		ft_new_arg(t_arg *arg, t_index *index);
 char		*ft_gnl(char *str);
 char		*ft_join_space(char *s1, char *s2);
+char		**ft_shlvl(char **env, int shlvl);
 t_arg_state	ft_find_cstate(char c, char next);
 
 // PARSING.ENV
