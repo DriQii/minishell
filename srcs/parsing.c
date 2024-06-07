@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:46 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:08:32 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 10:47:52 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,19 @@ char	**ft_sort_uprompt_2(char *str)
 	return (arg.args);
 }
 
-t_tokens	*ft_receive_uprompt(char *uprompt, char **env)
+t_tokens	*ft_receive_uprompt(char *uprompt, char **env, int *rexit)
 {
 	t_tokens	*tokens;
 	char		**tmpt;
 	int			i;
 
 	i = 0;
-	tmpt = ft_tokeniser(uprompt, env);
+	tmpt = ft_tokeniser(uprompt, env, rexit);
 	while (tmpt[i])
 		i++;
 	tokens = ft_calloc(sizeof(*tokens), i + 1);
 	tokens[0].nbtokens = i;
+	tokens[0].rexit = *rexit;
 	i = 0;
 	while (tmpt[i])
 	{

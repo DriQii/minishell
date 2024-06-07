@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:30 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:26:31 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:04:00 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,14 @@ void	ft_display_export(char **export_tab)
 	int	j;
 	int	count;
 
-	i = 0;
-	j = 0;
+	i = -1;
 	count = 0;
-	while (export_tab[i])
+	while (export_tab[++i])
 	{
 		count = 0;
-		j = 0;
+		j = -1;
 		printf("declare -x ");
-		while (export_tab[i][j])
+		while (export_tab[i][++j])
 		{
 			if (j > 1)
 			{
@@ -125,9 +124,7 @@ void	ft_display_export(char **export_tab)
 				}
 			}
 			printf("%c", export_tab[i][j]);
-			j++;
 		}
 		printf("\"\n");
-		i++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:29 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:23:52 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:50:33 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_check_args_exit(char *arg)
 	return (0);
 }
 
-long long	ft_exit(char **args)
+long long	ft_exit(char **args, int *rexit)
 {
 	long long	n;
 
@@ -37,7 +37,7 @@ long long	ft_exit(char **args)
 	{
 		if (ft_check_args_exit(args[1]) == 1)
 			return (printf("exit: %s: numeric argument required\n", args[1]),
-				2);
+				*rexit = 2, 2);
 		else
 		{
 			n = ft_atoll(args[1]);
@@ -47,8 +47,9 @@ long long	ft_exit(char **args)
 	else if (args[2])
 	{
 		printf("exit\nbash: exit: too many arguments\n");
-		g_exit = 1;
+		*rexit = 1;
 		return (-1);
 	}
+	*rexit = (int)n;
 	return (n);
 }

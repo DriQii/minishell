@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:18 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:24:08 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:47:58 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_builtins_exec(t_tokens token, char ***env)
+int	ft_builtins_exec(t_tokens token, char ***env, int *rexit)
 {
 	char	buf[4096];
 
@@ -27,9 +27,9 @@ int	ft_builtins_exec(t_tokens token, char ***env)
 	else if (ft_strcmp(token.args[0], "env") == 0)
 		return (ft_printtabtab(*env), -1);
 	else if (ft_strcmp(token.args[0], "exit") == 0)
-		return (ft_exit(token.args));
+		return (ft_exit(token.args, rexit));
 	else
-		return (ft_exec(token.args[0], token.args, *env), -1);
+		return (ft_exec(token.args[0], token.args, *env, rexit), -1);
 	return (-1);
 }
 

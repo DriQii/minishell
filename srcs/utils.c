@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:48 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:26:49 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 17:34:32 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_printtabtab(char **tb)
 	i = 0;
 	while (tb[i])
 	{
-		printf("[%s]\n", tb[i]);
+		printf("%s\n", tb[i]);
 		i++;
 	}
 }

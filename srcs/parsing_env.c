@@ -3,35 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:39 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:09:04 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 10:52:38 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_get_var(char *str, int *i, int *j, char **env)
+char	*ft_get_var(char *str, t_index *index, char **env, int *rexit)
 {
 	char	*var;
 	char	*tmp;
 
 	var = NULL;
-	while (str[*i] && ft_find_cstate(str[*i], str[(*i) + 1]) == SEARCH
-		&& !(*j > 2 && str[*i] == '$') && str[*i] != '\n')
+	while (str[index->i] && ft_find_cstate
+		(str[index->i], str[(index->i) + 1]) == SEARCH
+		&& !(index->j > 2 && str[index->i] == '$') && str[index->i] != '\n')
 	{
-		(*i)++;
-		(*j)++;
+		(index->i)++;
+		(index->j)++;
 	}
-	tmp = ft_calloc(sizeof(char), (*j) + 1);
-	ft_strncpy(tmp, &str[(*i + 1) - (*j)], (*j) - 1);
+	tmp = ft_calloc(sizeof(char), (index->j) + 1);
+	ft_strncpy(tmp, &str[(index->i + 1) - (index->j)], (index->j) - 1);
 	if (tmp[0] == '?' && !tmp[1])
-		var = ft_itoa(g_exit);
+		var = ft_itoa(*rexit);
 	else
 		var = ft_get_env(env, tmp);
 	free(tmp);
-	*j = 0;
+	index->j = 0;
 	return (var);
 }
 
@@ -59,7 +60,7 @@ void	ft_add_var(t_var *var, int *k)
 	var->var = NULL;
 }
 
-char	*ft_swap_var(char *str, char **env)
+char	*ft_swap_var(char *str, char **env, int *rexit)
 {
 	t_var		var;
 	t_index		index;
@@ -78,7 +79,7 @@ char	*ft_swap_var(char *str, char **env)
 			&strstate);
 		if (str[index.i] == '$' && strstate != QUOTE && str[index.i + 1])
 		{
-			var.var = ft_get_var(str, &index.i, &index.j, env);
+			var.var = ft_get_var(str, &index, env, rexit);
 			if (var.var)
 				ft_add_var(&var, &index.k);
 		}
@@ -88,14 +89,14 @@ char	*ft_swap_var(char *str, char **env)
 	return (free(str), var.newstr);
 }
 
-void	ft_vr(char **tb, char **env)
+void	ft_vr(char **tb, char **env, int *rexit)
 {
 	int	i;
 
 	i = 0;
 	while (tb[i])
 	{
-		tb[i] = ft_swap_var(tb[i], env);
+		tb[i] = ft_swap_var(tb[i], env, rexit);
 		i++;
 	}
 }

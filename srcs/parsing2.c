@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:04:27 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:21:38 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:44:37 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**ft_tokeniser(char *uprompt, char **env)
+char	**ft_tokeniser(char *uprompt, char **env, int *rexit)
 {
 	char	**tb;
 	char	**tokens;
 
 	tb = NULL;
 	tb = ft_sort_uprompt(uprompt);
-	ft_vr(tb, env);
+	ft_vr(tb, env, rexit);
 	free(uprompt);
 	tokens = ft_sort_token(tb);
 	return (tokens);

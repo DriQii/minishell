@@ -52,8 +52,6 @@
 # define FG_GREEN		"\001\e\033[38;2;0;200;0m\002"
 # define FG_RED			"\001\e\033[38;2;200;70;0m\002"
 
-extern int	g_exit;
-
 typedef enum e_arg_state
 {
 	FSPACE,
@@ -96,6 +94,7 @@ typedef struct s_index
 	int	j;
 	int	k;
 	int	l;
+	int	r;
 }				t_index;
 
 typedef struct s_tokens
@@ -105,6 +104,7 @@ typedef struct s_tokens
 	t_arg_state	*strstate;
 	int			nbtokens;
 	int			pipefd[2];
+	int			rexit;
 }				t_tokens;
 
 typedef struct s_var
@@ -126,7 +126,7 @@ void		ft_cd(char **args);
 void		ft_echo(t_tokens token);
 char		**ft_unset(char *varname, char **env);
 char		**ft_export(char *var_to_create, char **var_tab);
-long long	ft_exit(char **args);
+long long	ft_exit(char **args, int *rexit);
 
 // BUILTINS.UTILS
 
@@ -138,7 +138,7 @@ char		*ft_get_env(char **env, char *var_name);
 
 char		**ft_create_env(char **envp);
 char		**ft_tab_cat(char **tb, int pos);
-int			ft_builtins_exec(t_tokens token, char ***env);
+int			ft_builtins_exec(t_tokens token, char ***env, int *rexit);
 
 // EXPORT.C
 
@@ -160,18 +160,18 @@ t_arg_state	ft_find_cstate(char c, char next);
 
 // PARSING.ENV
 
-void		ft_vr(char **tb, char **env);
+void		ft_vr(char **tb, char **env, int *rexit);
 void		ft_last_parsing(t_tokens *tokens);
 char		*ft_parsing_end( char *str);
 
 // PARSING
 
 char		*ft_print_prompt(void);
-char		**ft_tokeniser(char *uprompt, char **env);
+char		**ft_tokeniser(char *uprompt, char **env, int *rexit);
 char		**ft_sort_uprompt(char *str);
 char		**ft_sort_uprompt_2(char *str);
 char		**ft_sort_token(char **tb);
-t_tokens	*ft_receive_uprompt(char *uprompt, char **env);
+t_tokens	*ft_receive_uprompt(char *uprompt, char **env, int *rexit);
 
 // UTILS
 
@@ -184,7 +184,7 @@ char		**ft_tb_realloc(char **tb);
 // EXEC
 
 char		**ft_create_path(char *path, char *cmd);
-void		ft_exec(char *cmd, char **arg, char **env);
+void		ft_exec(char *cmd, char **arg, char **env, int *rexit);
 void		ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env,
 				t_flux *brulux);
 char		**ft_export_exec(char **args, char **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:27 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:16:45 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:57:35 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env,
 			*env = ft_unset(tokens[index->j].args[i], *env);
 	}
 	else
-		index->k = ft_builtins_exec(tokens[index->j], env);
+		index->k = ft_builtins_exec(tokens[index->j], env, &tokens[0].rexit);
 	ft_freetabtab(tokens[index->j].args);
 	free(tokens[index->j].strstate);
 	free(tokens[index->j].token);
@@ -83,10 +83,10 @@ void	ft_child_exec(char *cmd, char **arg, char **env)
 	ft_freetabtab(path);
 	ft_freetabtab(env);
 	ft_freetabtab(arg);
-	exit(0);
+	exit(127);
 }
 
-void	ft_exec(char *cmd, char **arg, char **env)
+void	ft_exec(char *cmd, char **arg, char **env, int *rexit)
 {
 	pid_t	pid;
 	int		status;
@@ -98,6 +98,9 @@ void	ft_exec(char *cmd, char **arg, char **env)
 	{
 		wait(&status);
 		if (WIFEXITED(status))
-			g_exit = WEXITSTATUS(status);
+		{
+			if (rexit)
+				*rexit = WEXITSTATUS(status);
+		}
 	}
 }

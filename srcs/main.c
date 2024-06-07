@@ -6,13 +6,11 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:57:58 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 10:52:18 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int		g_exit;
 
 void	ft_handler(int sig)
 {
@@ -31,13 +29,16 @@ void	ft_handler(int sig)
 	}
 }
 
-void	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
+int	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 		char ***env)
 {
+	int	tmp;
+
+	tmp = 0;
 	while (index->k < 0)
 	{
 		index->j = -1;
-		tokens = ft_receive_uprompt(ft_print_prompt(), *env);
+		tokens = ft_receive_uprompt(ft_print_prompt(), *env, &tmp);
 		while (tokens[++index->j].token)
 		{
 			if (tokens[index->j + 1].token)
@@ -57,8 +58,11 @@ void	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 			else if (!tokens[index->j + 1].token && index->j > 0)
 				dup2(brulux->savein, STDIN_FILENO);
 		}
+		tmp = tokens[0].rexit;
 		free(tokens);
+		tokens = NULL;
 	}
+	return (tmp);
 }
 
 void	ft_clear(char **env)
@@ -68,7 +72,8 @@ void	ft_clear(char **env)
 	cleararg = NULL;
 	cleararg = (char **)malloc(sizeof(char *) * 2);
 	cleararg[0] = ft_strdup("clear");
-	ft_exec("clear", cleararg, env);
+	cleararg[1] = NULL;
+	ft_exec("clear", cleararg, env, NULL);
 	ft_freetabtab(cleararg);
 }
 
@@ -92,9 +97,9 @@ int	main(int ac, char **av, char **envp)
 	env = ft_calloc(sizeof(char **), 1);
 	*env = ft_create_env(envp);
 	ft_clear(*env);
-	ft_minishell(tokens, &index, &brulux, env);
+	index.r = ft_minishell(tokens, &index, &brulux, env);
 	ft_freetabtab(*env);
 	free(env);
 	rl_clear_history();
-	return (index.k);
+	return (index.r);
 }
