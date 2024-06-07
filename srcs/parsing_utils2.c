@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:44 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 17:08:02 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 17:14:50 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	ft_find_arg(char *str, t_arg *arg, t_index *index)
 	{
 		arg->strstate = ft_change_agstate(ft_find_cstate(str[index->i],
 					str[index->i + 1]), &arg->agstate, index->j);
-		if ((arg->strstate == 1 || arg->strstate == 2) && (str[index->i] != 32 
-		|| arg->arg) && str[index->i] != '\n' && str[index->i] != '\t')
+		if ((arg->strstate == 1 || arg->strstate == 2) && (str[index->i] != 32
+				|| arg->arg) && str[index->i] != '\n' && str[index->i] != '\t')
 			ft_joinarg(arg, str, index);
 		else if (arg->strstate == 3)
 			ft_new_arg(arg, index);
