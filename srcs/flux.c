@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flux.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:32 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:33:00 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:09:46 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ static t_eflux	ft_redirect_input(t_flux *flux, char **args, int i)
 }
 
 static t_eflux	ft_redirect_flux(char **args, t_index *index, t_flux *flux,
-		int state)
+		char c)
 {
 	if (ft_strlen(args[index->i]) > 2 || !args[index->i + 1])
 		return (ERRQ);
-	if (state == 0)
+	if (c == '>')
 	{
 		if (flux->actualflux == IN)
 			flux->actualflux = INOUT;
@@ -66,6 +66,18 @@ static t_eflux	ft_redirect_flux(char **args, t_index *index, t_flux *flux,
 	index->k = 1;
 }
 
+static char	**ft_end_redirec(char	**newargs, t_tokens *tokens
+		, int j, t_index *index)
+{
+	newargs = ft_tb_realloc(newargs);
+	if (tokens[j].args[index->i][0])
+		newargs[index->j] = ft_strdup(tokens[j].args[index->i]);
+	else
+		newargs[index->j] = ft_calloc(sizeof(char), 1);
+	index->j++;
+	return (newargs);
+}
+
 char	**ft_checkredirect(t_tokens *tokens, t_flux *flux, int j)
 {
 	t_index	index;
@@ -79,40 +91,17 @@ char	**ft_checkredirect(t_tokens *tokens, t_flux *flux, int j)
 	index.k = 0;
 	while (tokens[j].args[index.i])
 	{
-		if (tokens[j].args[index.i][0] == '>')
+		if (tokens[j].args[index.i][0] == '>'
+			|| tokens[j].args[index.i][0] == '<')
 		{
-			af = ft_redirect_flux(tokens[j].args, &index, flux, 0);
-			if (af == ERR)
+			af = ft_redirect_flux(tokens[j].args, &index, flux,
+					tokens[j].args[index.i][0]);
+			if (af == ERR || af == ERRQ)
 				return (ft_write_err(flux->saveout, tokens[j].args[index.i + 1],
-						0), ft_freetabtab(tokens[j].args),
-					ft_freetabtab(newargs), free(tokens[j].strstate),
-					free(tokens[j].token), NULL);
-			else if (af == ERRQ)
-				return (ft_write_err(flux->saveout, tokens[j].args[index.i], 1),
-					ft_freetabtab(tokens[j].args), ft_freetabtab(newargs),
-					free(tokens[j].strstate), free(tokens[j].token), NULL);
-		}
-		else if (tokens[j].args[index.i][0] == '<')
-		{
-			af = ft_redirect_flux(tokens[j].args, &index, flux, 1);
-			if (af == ERR)
-				return (ft_write_err(flux->saveout, tokens[j].args[index.i + 1],
-						0), ft_freetabtab(tokens[j].args),
-					ft_freetabtab(newargs), free(tokens[j].strstate),
-					free(tokens[j].token), NULL);
-			else if (af == ERRQ)
-				return (ft_write_err(flux->saveout, tokens[j].args[index.i], 1),
-					ft_freetabtab(tokens[j].args), ft_freetabtab(newargs),
-					free(tokens[j].strstate), free(tokens[j].token), NULL);
+						af), ft_err(tokens, newargs, j), NULL);
 		}
 		else if (flux->actualflux == INIT && index.k == 0)
-		{
-			newargs = ft_tb_realloc(newargs);
-			if (tokens[j].args[index.i][0])
-				newargs[index.j++] = ft_strdup(tokens[j].args[index.i]);
-			else
-				newargs[index.j++] = ft_calloc(sizeof(char), 1);
-		}
+			newargs = ft_end_redirec(newargs, tokens, j, &index);
 		index.i++;
 	}
 	return (ft_freetabtab(tokens[j].args), newargs);

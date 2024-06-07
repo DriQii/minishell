@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:41 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:55:46 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:11:47 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,39 +31,32 @@ t_arg_state	ft_find_cstate(char c, char next)
 		return (SEARCH);
 }
 
-int	ft_change_agstate(t_arg_state cstate, t_arg_state *agstate, int j)
+int	ft_change_agstate(t_arg_state cs, t_arg_state *ags, int j)
 {
-	if ((*agstate == SEARCH && cstate != DSPACE) || (*agstate == FSPACE
-			&& cstate == OP))
+	if ((*ags == SEARCH && cs != DSPACE) || (*ags == FSPACE && cs == OP))
 	{
-		if (*agstate == FSPACE && cstate == OP && j > 0)
-		{
-			*agstate = SEARCH;
-			return (3);
-		}
-		if (cstate == DQUOTE || cstate == QUOTE)
-			*agstate = cstate;
-		else if (cstate == OP)
-			*agstate = OP;
+		if (*ags == FSPACE && cs == OP && j > 0)
+			return (*ags = SEARCH, 3);
+		if (cs == DQUOTE || cs == QUOTE)
+			*ags = cs;
+		else if (cs == OP)
+			*ags = OP;
 		else
-			*agstate = FSPACE;
+			*ags = FSPACE;
 		return (1);
 	}
-	else if (*agstate == SEARCH && cstate == DSPACE)
+	else if (*ags == SEARCH && cs == DSPACE)
 		return (0);
-	else if (((cstate == FSPACE || cstate == DSPACE || cstate == OP)
-			&& *agstate == FSPACE) || ((cstate == SEARCH || cstate == DQUOTE
-				|| cstate == QUOTE) && *agstate == OP))
-	{
-		*agstate = SEARCH;
-		return (3);
-	}
-	else if ((cstate == DQUOTE && *agstate == DQUOTE) || (cstate == QUOTE
-			&& *agstate == QUOTE))
-		*agstate = FSPACE;
-	else if ((cstate == DQUOTE || cstate == QUOTE) && (*agstate != DQUOTE
-			&& *agstate != QUOTE))
-		*agstate = cstate;
+	else if (((cs == FSPACE || cs == DSPACE || cs == OP)
+			&& *ags == FSPACE) || ((cs == SEARCH || cs == DQUOTE
+				|| cs == QUOTE) && *ags == OP))
+		return (*ags = SEARCH, 3);
+	else if ((cs == DQUOTE && *ags == DQUOTE) || (cs == QUOTE
+			&& *ags == QUOTE))
+		*ags = FSPACE;
+	else if ((cs == DQUOTE || cs == QUOTE) && (*ags != DQUOTE
+			&& *ags != QUOTE))
+		*ags = cs;
 	return (2);
 }
 

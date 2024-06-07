@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:48 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 17:34:32 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:14:15 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,14 @@ void	ft_printtabtab(char **tb)
 	}
 }
 
-void	ft_print_tokens(t_tokens *tokens)
+void	ft_clear(char **env)
 {
-	int	i;
+	char	**cleararg;
 
-	i = 0;
-	ft_printf("[//////////////////////////]\n");
-	while (tokens[i].token)
-	{
-		ft_printf("[TOKEN]\n%s\n[ARGS]\n", (tokens[i]).token);
-		ft_printtabtab((tokens[i]).args);
-		ft_printf("[//////////////////////////]\n");
-		i++;
-	}
+	cleararg = NULL;
+	cleararg = (char **)malloc(sizeof(char *) * 2);
+	cleararg[0] = ft_strdup("clear");
+	cleararg[1] = NULL;
+	ft_exec("clear", cleararg, env, NULL);
+	ft_freetabtab(cleararg);
 }

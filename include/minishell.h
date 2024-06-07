@@ -178,6 +178,7 @@ t_tokens	*ft_receive_uprompt(char *uprompt, char **env, int *rexit);
 void		ft_print_tokens(t_tokens *tokens);
 void		ft_printtabtab(char **tb);
 void		*ft_freetabtab(char **tb);
+void		ft_clear(char **env);
 char		*ft_realloc(char *str);
 char		**ft_tb_realloc(char **tb);
 
@@ -195,7 +196,8 @@ int			ft_change_agstate_2(t_arg_state cstate, t_arg_state *agstate);
 char		**ft_checkredirect(t_tokens *tokens, t_flux *flux, int j);
 void		ft_change_flux(t_eflux *brulux, int savein, int saveout);
 void		ft_heredock(char *end, t_flux *flux);
-void		ft_write_err(int saveout, char *str, int err);
+void		ft_write_err(int saveout, char *str, t_eflux af);
+void		ft_err(t_tokens *tokens, char **newargs, int j);
 t_arg_state	ft_find_cstate_2(char c, char next);
 
 #endif

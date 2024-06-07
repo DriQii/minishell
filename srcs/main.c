@@ -6,13 +6,13 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 12:08:35 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:13:41 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_handler(int sig)
+static void	ft_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -29,7 +29,22 @@ void	ft_handler(int sig)
 	}
 }
 
-int	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
+static void	ft_pipe(t_tokens *tokens, t_index *index)
+{
+	pipe(tokens[index->j].pipefd);
+	dup2(tokens[index->j].pipefd[1], STDOUT_FILENO);
+	close(tokens[index->j].pipefd[1]);
+}
+
+static int	set_tmp(t_tokens *tokens, int tmp)
+{
+	tmp = tokens[0].rexit;
+	free(tokens);
+	tokens = NULL;
+	return (tmp);
+}
+
+static int	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 		char ***env)
 {
 	int	tmp;
@@ -39,16 +54,10 @@ int	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 	{
 		index->j = -1;
 		tokens = ft_receive_uprompt(ft_print_prompt(), *env, &tmp);
-		if (tokens == NULL)
-			return(tmp);
 		while (tokens[++index->j].token)
 		{
 			if (tokens[index->j + 1].token)
-			{
-				pipe(tokens[index->j].pipefd);
-				dup2(tokens[index->j].pipefd[1], STDOUT_FILENO);
-				close(tokens[index->j].pipefd[1]);
-			}
+				ft_pipe(tokens, index);
 			else if (!tokens[index->j + 1].token && index->j > 0)
 				dup2(brulux->saveout, STDOUT_FILENO);
 			ft_prompt_exec(tokens, index, env, brulux);
@@ -60,23 +69,9 @@ int	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 			else if (!tokens[index->j + 1].token && index->j > 0)
 				dup2(brulux->savein, STDIN_FILENO);
 		}
-		tmp = tokens[0].rexit;
-		free(tokens);
-		tokens = NULL;
+		tmp = set_tmp(tokens, tmp);
 	}
 	return (tmp);
-}
-
-void	ft_clear(char **env)
-{
-	char	**cleararg;
-
-	cleararg = NULL;
-	cleararg = (char **)malloc(sizeof(char *) * 2);
-	cleararg[0] = ft_strdup("clear");
-	cleararg[1] = NULL;
-	ft_exec("clear", cleararg, env, NULL);
-	ft_freetabtab(cleararg);
 }
 
 int	main(int ac, char **av, char **envp)

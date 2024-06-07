@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_end.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:38 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:19:36 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 12:32:22 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ int	ft_check_available(char *str)
 		i++;
 	}
 	return (j);
+}
+
+void	ft_add_char(t_parsend *pstr, t_index *index, t_arg_state *strstate)
+{
+	pstr->newstr = ft_realloc(pstr->newstr);
+	pstr->newstr[index->j] = pstr->str[index->i];
+	ft_change_agstate_2(ft_find_cstate(pstr->str[index->i],
+			pstr->str[index->i + 1]), strstate);
+	index->j++;
+	index->i++;
 }
 
 void	ft_add_last_str(t_arg_state *strstate, t_arg_state *state,
@@ -56,14 +66,7 @@ void	ft_add_last_str(t_arg_state *strstate, t_arg_state *state,
 					pstr->str[index->i + 1]), strstate);
 	}
 	else if (pstr->str[index->i])
-	{
-		pstr->newstr = ft_realloc(pstr->newstr);
-		pstr->newstr[index->j] = pstr->str[index->i];
-		ft_change_agstate_2(ft_find_cstate(pstr->str[index->i],
-				pstr->str[index->i + 1]), strstate);
-		index->j++;
-		index->i++;
-	}
+		ft_add_char(pstr, index, strstate);
 }
 
 char	*ft_parsing_end(char *str)

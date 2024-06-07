@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flux2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:33:16 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:34:09 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:09:53 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	ft_change_flux(t_eflux *brulux, int savein, int saveout)
 	*brulux = INIT;
 }
 
-void	ft_write_err(int saveout, char *str, int err)
+void	ft_write_err(int saveout, char *str, t_eflux af)
 {
-	if (err == 0)
+	if (af == ERR)
 	{
 		write(saveout, "bash: ", ft_strlen("bash: "));
 		write(saveout, str, ft_strlen(str));
@@ -76,4 +76,12 @@ void	ft_write_err(int saveout, char *str, int err)
 			write(saveout, &str[1], 1);
 		write(saveout, "\'\n", 2);
 	}
+}
+
+void	ft_err(t_tokens *tokens, char **newargs, int j)
+{
+	ft_freetabtab(tokens[j].args);
+	ft_freetabtab(newargs);
+	free(tokens[j].strstate);
+	free(tokens[j].token);
 }
