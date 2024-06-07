@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:46 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 12:07:20 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/07 14:04:31 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*ft_print_prompt(void)
 	free(prompt);
 	if (uprompt)
 		return (uprompt);
+	printf("exit\n");
 	return (NULL);
 }
 
