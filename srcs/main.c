@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 13:44:23 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:23:50 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main(int ac, char **av, char **envp)
 	*env = ft_create_env(envp);
 	tmp = ft_get_env(*env, "SHLVL");
 	*env = ft_shlvl(*env, ft_atoi(tmp));
-	ft_clear(*env);
+	//ft_clear(*env);
 	index.r = ft_minishell(tokens, &index, &brulux, env);
 	rl_clear_history();
 	return (ft_freetabtab(*env), free(env), free(tmp), index.r);

@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:27 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 15:10:46 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:17:39 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	ft_child_exec(char *cmd, char **arg, char **env, int saveout)
 		write(saveout, "bash: ", 6);
 		write(saveout, cmd, ft_strlen(cmd));
 		write(saveout, ": command not found\n", 20);
+		printf("bash: %s: command not found\n", cmd);
 	}
 	else
 		execve(path[i], arg, env);

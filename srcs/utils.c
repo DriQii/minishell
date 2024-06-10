@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:48 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 13:14:15 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:23:17 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,27 @@ void	ft_printtabtab(char **tb)
 
 void	ft_clear(char **env)
 {
+	int		status;
+	int		execr;
+	int		i;
+	char	**path;
 	char	**cleararg;
+	pid_t	pid;
 
-	cleararg = NULL;
 	cleararg = (char **)malloc(sizeof(char *) * 2);
 	cleararg[0] = ft_strdup("clear");
 	cleararg[1] = NULL;
-	ft_exec("clear", cleararg, env, NULL);
+	i = -1;
+	pid = fork();
+	if (pid == 0)
+	{
+		path = ft_create_path(getenv("PATH"), "clear");
+		execr = access(path[0], X_OK);
+		while (execr == -1 && path[++i])
+			execr = access(path[i], X_OK);
+		execve("clear", cleararg, env);
+	}
+	else
+		wait(&status);
 	ft_freetabtab(cleararg);
 }
