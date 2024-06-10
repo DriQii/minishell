@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:04:27 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 16:35:49 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/09 14:03:22 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	**ft_tokeniser(char *uprompt, char **env, int *rexit)
 	tb = ft_sort_uprompt(uprompt);
 	ft_vr(tb, env, rexit);
 	free(uprompt);
+	ft_printtabtab(tb);
 	tokens = ft_sort_token(tb);
 	return (tokens);
 }
