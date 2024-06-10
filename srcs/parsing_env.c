@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:39 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 14:14:49 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 13:56:59 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_get_var(char *str, t_index *index, char **env, int *rexit)
 	var = NULL;
 	while (str[index->i] && ft_find_cstate
 		(str[index->i], str[(index->i) + 1]) == SEARCH
-		&& !(index->j > 2 && str[index->i] == '$')
+		&& !(index->j >= 2 && str[index->i] == '$')
 		&& str[index->i] != '\n' && str[index->i] != '=')
 	{
 		(index->i)++;
