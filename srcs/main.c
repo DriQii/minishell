@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 14:16:58 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 13:44:23 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,15 @@ static void	ft_pipe(t_tokens *tokens, t_index *index, int state)
 	}
 }
 
-static int	set_tmp(t_tokens *tokens, int tmp)
+static int	set_tmp(t_tokens *tokens, int tmp, t_index index)
 {
 	tmp = tokens[0].rexit;
+	if (tokens[index.j].args)
+	{
+		ft_freetabtab(tokens[index.j].args);
+		free(tokens[index.j].strstate);
+		free(tokens[index.j].token);
+	}
 	free(tokens);
 	tokens = NULL;
 	return (tmp);
@@ -76,7 +82,7 @@ static int	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 			else if (!tokens[index->j + 1].token && index->j > 0)
 				dup2(brulux->savein, STDIN_FILENO);
 		}
-		tmp = set_tmp(tokens, tmp);
+		tmp = set_tmp(tokens, tmp, *index);
 	}
 	return (tmp);
 }

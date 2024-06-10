@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:46 by evella            #+#    #+#             */
-/*   Updated: 2024/06/09 14:01:28 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 13:46:04 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ char	**ft_sort_token(char **tb)
 		tmp = ft_strtrim(tb[i], " \n");
 		if (tmp[0] == '|' && ft_strlen(tmp) == 1)
 		{
+			if (i == 0 || !tb[i + 1])
+				return (printf("usage pipe : [cmd] | [cmd] ...\n"), ft_freetabtab(tokens),
+					free(tmp), ft_freetabtab(tb), NULL);
 			tokens = ft_tb_realloc(tokens);
 			j++;
 			i++;
