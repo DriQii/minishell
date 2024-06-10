@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:25 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 15:26:26 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:50:31 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,48 @@ void	ft_cd(char **args)
 	chdir(cutdir);
 	free(cutdir);
 }
-
-void	ft_echo(t_tokens token)
+static int	ft_find_option(char *arg)
 {
 	int	i;
-
-	i = 1;
-	if (ft_strcmp(token.args[1], "-n") == 0)
-		i++;
-	while (token.args[i])
+	
+	i = 2;
+	if (arg[0] == '-' && arg[1] == 'n')
 	{
-		printf("%s", token.args[i]);
-		i++;
-		if (token.args[i] != NULL)
-			printf(" ");
+		while (arg[i])
+		{
+			if (arg[i] != 'n')
+				return (1);
+			i++;
+		}
+		return (0);
 	}
-	if (ft_strcmp(token.args[1], "-n") != 0)
-		printf("\n");
+	else
+		return (1);
+}
+
+void    ft_echo(t_tokens token)
+{
+    int    i;
+    int    j;
+
+    i = 1;
+    j = 0;
+    while (token.args[i])
+    {
+        if (ft_find_option(token.args[i]) == 0 && j == 0)
+            i++;
+        else if (ft_find_option(token.args[i]) == 1 || (ft_find_option(token.args[i]) == 0 && j > 0))
+        {
+            printf("%s", token.args[i]);
+            j++;
+            i++;
+        }
+        if (token.args[i] != NULL && ft_find_option(token.args[i - 1]) == 1)
+            printf(" ");
+    }
+    if (token.args[1])
+        if (ft_find_option(token.args[1]) == 1)
+            printf("\n");
 }
 
 char	**ft_unset(char *varname, char **env)
