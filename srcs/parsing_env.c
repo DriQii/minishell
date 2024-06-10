@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:39 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 13:56:59 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:40:23 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	ft_vr(char **tb, char **env, int *rexit)
 	while (tb[i])
 	{
 		tb[i] = ft_swap_var(tb[i], env, rexit);
+		if (!tb[i])
+			tb[i] = ft_calloc(sizeof(char), 1);
 		i++;
 	}
 }

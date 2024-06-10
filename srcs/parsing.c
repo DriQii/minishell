@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:46 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 13:46:04 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:35:05 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,14 @@ t_tokens	*ft_receive_uprompt(char *uprompt, char **env, int *rexit)
 	return (tokens);
 }
 
+int ft_check_ok(char *str)
+{
+	if (ft_strcmp(str, "<<") == 0 || ft_strcmp(str, "<") == 0 
+		|| ft_strcmp(str, ">") == 0 || ft_strcmp(str, ">>") == 0)
+			return (1);
+	return(0);
+}
+
 char	**ft_sort_token(char **tb)
 {
 	int		i;
@@ -109,7 +117,7 @@ char	**ft_sort_token(char **tb)
 		tmp = ft_strtrim(tb[i], " \n");
 		if (tmp[0] == '|' && ft_strlen(tmp) == 1)
 		{
-			if (i == 0 || !tb[i + 1])
+			if (i == 0 || !tb[i + 1] || ft_check_ok(tb[i + 1]) || ft_check_ok(tb[i - 1]))
 				return (printf("usage pipe : [cmd] | [cmd] ...\n"), ft_freetabtab(tokens),
 					free(tmp), ft_freetabtab(tb), NULL);
 			tokens = ft_tb_realloc(tokens);

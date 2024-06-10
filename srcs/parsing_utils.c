@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:41 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 17:15:13 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:47:14 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	ft_change_agstate(t_arg_state cs, t_arg_state *ags, int j)
 	else if (*ags == SEARCH && cs == DSPACE)
 		return (0);
 	else if (((cs == FSPACE || cs == DSPACE || cs == OP)
-			&& *ags == FSPACE) || ((cs == SEARCH || cs == DQUOTE
-				|| cs == QUOTE) && *ags == OP))
+			&& *ags == FSPACE) || (cs != OP && *ags == OP))
 		return (*ags = SEARCH, 3);
 	else if ((cs == DQUOTE && *ags == DQUOTE) || (cs == QUOTE
 			&& *ags == QUOTE))
