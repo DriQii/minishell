@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:27 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 13:41:32 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:10:46 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env,
 			*env = ft_unset(tokens[index->j].args[i], *env);
 	}
 	else
-		index->k = ft_builtins_exec(tokens[index->j], env, &tokens[0].rexit);
+		index->k = ft_builtins_exec(tokens[index->j], env, &tokens[0].rexit, brulux->saveout);
 	ft_freetabtab(tokens[index->j].args);
 	free(tokens[index->j].strstate);
 	free(tokens[index->j].token);
@@ -65,7 +65,7 @@ char	**ft_create_path(char *path, char *cmd)
 	return (tbpath);
 }
 
-void	ft_child_exec(char *cmd, char **arg, char **env)
+void	ft_child_exec(char *cmd, char **arg, char **env, int saveout)
 {
 	int		execr;
 	int		i;
@@ -77,7 +77,11 @@ void	ft_child_exec(char *cmd, char **arg, char **env)
 	while (execr == -1 && path[++i])
 		execr = access(path[i], X_OK);
 	if (execr == -1)
-		printf("bash: %s: command not found\n", cmd);
+	{
+		write(saveout, "bash: ", 6);
+		write(saveout, cmd, ft_strlen(cmd));
+		write(saveout, ": command not found\n", 20);
+	}
 	else
 		execve(path[i], arg, env);
 	ft_freetabtab(path);
@@ -86,14 +90,14 @@ void	ft_child_exec(char *cmd, char **arg, char **env)
 	exit(127);
 }
 
-void	ft_exec(char *cmd, char **arg, char **env, int *rexit)
+void	ft_exec(t_tokens token, char **env, int *rexit, int saveout)
 {
 	pid_t	pid;
 	int		status;
 
 	pid = fork();
 	if (pid == 0)
-		ft_child_exec(cmd, arg, env);
+		ft_child_exec(token.args[0], token.args, env, saveout);
 	else
 	{
 		wait(&status);

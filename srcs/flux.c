@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:32 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 17:57:16 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:00:53 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_eflux	ft_redirect_input(t_flux *flux, char **args, int i)
 static t_eflux	ft_redirect_flux(char **args, t_index *index, t_flux *flux,
 		char c)
 {
-	if (ft_strlen(args[index->i]) > 2 || !args[index->i + 1])
+	if (ft_strlen(args[index->i]) > 2 || !args[index->i + 1] || index->i == 0)
 		return (ERRQ);
 	if (c == '>')
 	{

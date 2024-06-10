@@ -138,7 +138,7 @@ char		*ft_get_env(char **env, char *var_name);
 
 char		**ft_create_env(char **envp);
 char		**ft_tab_cat(char **tb, int pos);
-int			ft_builtins_exec(t_tokens token, char ***env, int *rexit);
+int			ft_builtins_exec(t_tokens token, char ***env, int *rexit, int fd);
 
 // EXPORT.C
 
@@ -186,7 +186,7 @@ char		**ft_tb_realloc(char **tb);
 // EXEC
 
 char		**ft_create_path(char *path, char *cmd);
-void		ft_exec(char *cmd, char **arg, char **env, int *rexit);
+void		ft_exec(t_tokens token, char **env, int *rexit, int fd);
 void		ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env,
 				t_flux *brulux);
 char		**ft_export_exec(char **args, char **env);

@@ -6,13 +6,13 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:18 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:47:58 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:13:34 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_builtins_exec(t_tokens token, char ***env, int *rexit)
+int	ft_builtins_exec(t_tokens token, char ***env, int *rexit, int saveout)
 {
 	char	buf[4096];
 
@@ -29,7 +29,7 @@ int	ft_builtins_exec(t_tokens token, char ***env, int *rexit)
 	else if (ft_strcmp(token.args[0], "exit") == 0)
 		return (ft_exit(token.args, rexit));
 	else
-		return (ft_exec(token.args[0], token.args, *env, rexit), -1);
+		return (ft_exec(token, *env, rexit, saveout), -1);
 	return (-1);
 }
 
