@@ -6,38 +6,51 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:30 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:04:00 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:33:58 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**ft_export(char *var_to_create, char **var_tab)
+static	int    ft_check_if_exportable(char *var_to_create)
 {
-	int	i;
-	int	pos;
+    int    i;
 
-	var_tab = ft_tb_realloc(var_tab);
-	i = 0;
-	if (!var_to_create)
-		return (ft_bubble_export(var_tab), var_tab);
-	if (ft_isdigit(var_to_create[0]) == 1)
-		return (printf("bash: export: « %s » : not a valid identifier\n",
-				var_to_create), var_tab);
-	if (ft_strchr(var_to_create, '=') == NULL || ft_strcmp(var_to_create,
-			"=") == 0)
-		return (var_tab);
-	if (ft_check_var(var_to_create, var_tab) != 0)
-	{
-		pos = ft_check_var(var_to_create, var_tab);
-		free(var_tab[pos]);
-		var_tab[pos] = ft_strdup(var_to_create);
-		return (var_tab);
-	}
-	while (var_tab[i])
-		i++;
-	var_tab[i] = ft_strdup(var_to_create);
-	return (var_tab);
+    i = 1;
+    while (var_to_create[i] != '=')
+    {
+        if (ft_isalnum(var_to_create[i]) == 0)
+            return (1);
+        i++;
+    }
+    return (0);
+}
+char    **ft_export(char *var_to_create, char **var_tab)
+{
+    int    i;
+    int    pos;
+
+    var_tab = ft_tb_realloc(var_tab);
+    i = 0;
+    if (!var_to_create)
+        return (ft_bubble_export(var_tab), var_tab);
+    if (ft_isalpha(var_to_create[0]) == 0 || ft_check_if_exportable(var_to_create) == 1)
+        return (printf("bash: export: « %s » : not a valid identifier\n",
+                var_to_create), var_tab);
+    if (ft_strchr(var_to_create, '=') == NULL || ft_strcmp(var_to_create,
+            "=") == 0)
+        return (var_tab);
+    if (ft_check_var(var_to_create, var_tab) != 0)
+    {
+        pos = ft_check_var(var_to_create, var_tab);
+        free(var_tab[pos]);
+        var_tab[pos] = ft_strdup(var_to_create);
+        return (var_tab);
+    }
+    while (var_tab[i])
+        i++;
+    var_tab[i] = ft_strdup(var_to_create);
+    return (var_tab);
 }
 
 int	ft_check_var(char *var, char **var_tab)

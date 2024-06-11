@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   last_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evella <evella@student.42.fr>              +#+  +:+       +#+        */
+/*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:34 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:10:07 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:03:41 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	ft_new_state(t_arg_state *strstate, char c)
 {
-	if (*strstate == SEARCH && c == '\'')
+	if (*strstate == SEARCH && (c == '<' || c == '>'))
+		*strstate = OP;
+	if ((*strstate == SEARCH || *strstate == OP )&& c == '\'')
 		*strstate = QUOTE;
-	else if (*strstate == SEARCH && c == '\"')
+	else if ((*strstate == SEARCH || *strstate == OP )&& c == '\"')
 		*strstate = DQUOTE;
-	else if (*strstate == QUOTE && c == '\'')
+	else if ((*strstate == QUOTE || *strstate == OP) && c == '\'')
 		*strstate = SEARCH;
-	else if (*strstate == DQUOTE && c == '\"')
+	else if ((*strstate == DQUOTE || *strstate == OP) && c == '\"')
 		*strstate = SEARCH;
 }
 
@@ -95,9 +97,9 @@ void	ft_last_parsing(t_tokens *tokens)
 	index.i = 0;
 	index.j = 0;
 	tokentmp = NULL;
-	ft_save_state(tokens, index.j);
 	while (tokens[index.j].token)
 	{
+		ft_save_state(tokens, index.j);
 		ft_last_parsing_2(&tokentmp, tokens, &index);
 		index.i = 0;
 		free(tokens[index.j].token);

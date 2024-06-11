@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:32 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 15:00:53 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/10 16:38:47 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ char	**ft_checkredirect(t_tokens *tokens, t_flux *flux, int j)
 	index.k = 0;
 	while (tokens[j].args[index.i])
 	{
-		if (tokens[j].args[index.i][0] == '>'
-			|| tokens[j].args[index.i][0] == '<')
+		if ((tokens[j].args[index.i][0] == '>'
+			|| tokens[j].args[index.i][0] == '<'))
 		{
 			af = ft_redirect_flux(tokens[j].args, &index, flux,
 					tokens[j].args[index.i][0]);
