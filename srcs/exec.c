@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:27 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 15:17:39 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:31:00 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_prompt_exec(t_tokens *tokens, t_index *index, char ***env,
 	int	i;
 
 	i = 0;
+	if (!tokens[index->j].args[0][0])
+		return;
 	tokens[index->j].args = ft_checkredirect(tokens, brulux, index->j);
 	if (tokens[index->j].args == NULL)
 		return (ft_change_flux(&brulux->actualflux, brulux->savein,

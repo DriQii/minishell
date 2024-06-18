@@ -116,8 +116,9 @@ typedef struct s_var
 
 typedef struct s_parsend
 {
-	char	*newstr;
-	char	*str;
+	char		*newstr;
+	char		*str;
+	t_arg_state	*strstate;
 }				t_parsend;
 
 // BUILTINS
@@ -163,7 +164,7 @@ t_arg_state	ft_find_cstate(char c, char next);
 
 void		ft_vr(char **tb, char **env, int *rexit);
 void		ft_last_parsing(t_tokens *tokens);
-char		*ft_parsing_end( char *str);
+char		*ft_parsing_end(char *str, t_tokens *token);
 
 // PARSING
 

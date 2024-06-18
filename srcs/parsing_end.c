@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:38 by evella            #+#    #+#             */
-/*   Updated: 2024/06/07 12:32:22 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/18 17:34:29 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ void	ft_add_last_str(t_arg_state *strstate, t_arg_state *state,
 	else if (pstr->str[index->i])
 		ft_add_char(pstr, index, strstate);
 }
-
-char	*ft_parsing_end(char *str)
+char	*ft_parsing_end(char *str, t_tokens *token)
 {
 	t_arg_state	strstate;
 	t_arg_state	state;
@@ -82,10 +81,12 @@ char	*ft_parsing_end(char *str)
 	strstate = SEARCH;
 	pstr.newstr = NULL;
 	pstr.str = str;
+	pstr.strstate = token->strstate;
 	if (str[index.i])
 		ft_change_agstate_2(ft_find_cstate(str[0], str[1]), &strstate);
 	while (str[index.i])
 		ft_add_last_str(&strstate, &state, &index, &pstr);
+	token->strstate = pstr.strstate;
 	if (!pstr.newstr)
 		return (free(str), ft_calloc(sizeof(char), 1));
 	free(str);

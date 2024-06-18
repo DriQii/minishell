@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:34 by evella            #+#    #+#             */
-/*   Updated: 2024/06/11 14:03:41 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/18 17:25:51 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 void	ft_new_state(t_arg_state *strstate, char c)
 {
-	if (*strstate == SEARCH && (c == '<' || c == '>'))
+	if (c == '<' || c == '>')
 		*strstate = OP;
-	if ((*strstate == SEARCH || *strstate == OP )&& c == '\'')
+	if (c == '\'')
 		*strstate = QUOTE;
-	else if ((*strstate == SEARCH || *strstate == OP )&& c == '\"')
+	else if (c == '\"')
 		*strstate = DQUOTE;
-	else if ((*strstate == QUOTE || *strstate == OP) && c == '\'')
-		*strstate = SEARCH;
-	else if ((*strstate == DQUOTE || *strstate == OP) && c == '\"')
+	else
 		*strstate = SEARCH;
 }
 
@@ -56,14 +54,11 @@ static void	ft_save_state(t_tokens *tokens, int x)
 	while (tokens[x].args && tokens[x].args[index.i])
 	{
 		index.j = 0;
-		while (tokens[x].args[index.i][index.j])
-		{
-			ft_new_state(&strstate, tokens[x].args[index.i][index.j]);
-			tmpstate = tokens[x].strstate;
-			tokens[x].strstate = ft_calloc(sizeof(t_arg_state), index.k + 2);
-			tokens[x].strstate[index.k] = strstate;
-			ft_save_state_2(tokens, x, &index, tmpstate);
-		}
+		ft_new_state(&strstate, tokens[x].args[index.i][index.j]);
+		tmpstate = tokens[x].strstate;
+		tokens[x].strstate = ft_calloc(sizeof(t_arg_state), index.k + 2);
+		tokens[x].strstate[index.k] = strstate;
+		ft_save_state_2(tokens, x, &index, tmpstate);
 		index.i++;
 	}
 }
@@ -84,7 +79,7 @@ static void	ft_last_parsing_2(char **tokentmp, t_tokens *tokens, t_index *index)
 			*tokentmp = ft_strdup(tmp);
 		free(tmp);
 		tokens[index->j].args[index->i] = ft_parsing_end
-			(tokens[index->j].args[index->i]);
+			(tokens[index->j].args[index->i], &tokens[index->j]);
 		index->i++;
 	}
 }
