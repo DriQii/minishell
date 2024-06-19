@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:18 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 15:13:34 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:37:05 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_builtins_exec(t_tokens token, char ***env, int *rexit, int saveout)
 	if (!token.args[0] || !token.args[0][0])
 		return (-1);
 	if (ft_strcmp(token.args[0], "cd") == 0)
-		return (ft_cd(token.args), -1);
+		return (ft_cd(token.args, saveout, rexit), -1);
 	else if (ft_strcmp(token.args[0], "echo") == 0)
 		return (ft_echo(token), -1);
 	else if (ft_strcmp(token.args[0], "pwd") == 0)

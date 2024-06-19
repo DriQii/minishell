@@ -123,7 +123,7 @@ typedef struct s_parsend
 
 // BUILTINS
 
-void		ft_cd(char **args);
+void		ft_cd(char **args, int saveout, int *rexit);
 void		ft_echo(t_tokens token);
 char		**ft_unset(char *varname, char **env);
 char		**ft_export(char *var_to_create, char **var_tab);

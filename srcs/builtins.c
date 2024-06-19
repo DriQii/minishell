@@ -6,21 +6,30 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:25 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 14:50:31 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:48:53 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_cd(char **args)
+void	ft_cd(char **args, int saveout, int *rexit)
 {
 	char	*path;
 	char	buff[4096];
 	char	*cutdir;
 
+	if (args[1] && args[2])
+	{
+		write(saveout, "bash: cd: too many arguments\n", 29);
+		*rexit = 1;
+		return;
+	}
 	path = getcwd(buff, 4096);
 	cutdir = ft_cutdir(path, args[1]);
-	chdir(cutdir);
+	if (chdir(cutdir) == 0 || ft_strcmp(path, args[1]) == 0)
+		*rexit = 0;
+	else
+		*rexit = 1;
 	free(cutdir);
 }
 static int	ft_find_option(char *arg)
