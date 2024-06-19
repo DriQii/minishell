@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:39 by evella            #+#    #+#             */
-/*   Updated: 2024/06/10 14:40:23 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:01:23 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*ft_get_var(char *str, t_index *index, char **env, int *rexit)
 	{
 		(index->i)++;
 		(index->j)++;
+		if (str[index->i - 1] == '?')
+			break;
 	}
 	tmp = ft_calloc(sizeof(char), (index->j) + 1);
 	ft_strncpy(tmp, &str[(index->i + 1) - (index->j)], (index->j) - 1);
