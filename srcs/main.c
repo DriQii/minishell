@@ -6,19 +6,19 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:36 by evella            #+#    #+#             */
-/*   Updated: 2024/06/19 16:00:13 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:45:17 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	ft_handler(int sig)
+void	ft_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
 		rl_on_new_line();
 		write(1, "\n", 1);
-		rl_replace_line("", 0);
+		rl_replace_line("", 1);
 		rl_redisplay();
 	}
 	else
@@ -82,8 +82,8 @@ static int	ft_minishell(t_tokens *tokens, t_index *index, t_flux *brulux,
 			else if (!tokens[index->j + 1].token && index->j > 0)
 				dup2(brulux->savein, STDIN_FILENO);
 		}
+		tmp = set_tmp(tokens, tmp, *index);
 	}
-	tmp = set_tmp(tokens, tmp, *index);
 	return (tmp);
 }
 

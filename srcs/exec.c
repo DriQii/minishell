@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:27 by evella            #+#    #+#             */
-/*   Updated: 2024/06/19 15:53:47 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:40:22 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ char	**ft_create_path(char *path, char *cmd)
 	int		i;
 	int		j;
 
-	tbpath = NULL;
-	tmppath = ft_split(path, ':');
 	i = 0;
 	j = 1;
+	tbpath = NULL;
 	tbpath = ft_tb_realloc(tbpath);
 	tbpath[0] = ft_strdup(cmd);
+	if (!path)
+		return(tbpath);
+	tmppath = ft_split(path, ':');
 	while (tmppath[i])
 	{
 		tbpath = ft_tb_realloc(tbpath);
@@ -74,7 +76,7 @@ void	ft_child_exec(char *cmd, char **arg, char **env, int saveout)
 	char	**path;
 
 	i = 0;
-	path = ft_create_path(getenv("PATH"), cmd);
+	path = ft_create_path(ft_get_env(env, "PATH"), cmd);
 	execr = access(path[0], X_OK);
 	while (execr == -1 && path[++i])
 		execr = access(path[i], X_OK);
@@ -83,7 +85,6 @@ void	ft_child_exec(char *cmd, char **arg, char **env, int saveout)
 		write(saveout, "bash: ", 6);
 		write(saveout, cmd, ft_strlen(cmd));
 		write(saveout, ": command not found\n", 20);
-		printf("bash: %s: command not found\n", cmd);
 	}
 	else
 		execve(path[i], arg, env);
@@ -91,6 +92,12 @@ void	ft_child_exec(char *cmd, char **arg, char **env, int saveout)
 	ft_freetabtab(env);
 	ft_freetabtab(arg);
 	exit(127);
+}
+void ft_void(int sig)
+{
+	(void) sig;
+	printf("\n");
+	return;
 }
 
 void	ft_exec(t_tokens token, char **env, int *rexit, int saveout)
@@ -103,11 +110,15 @@ void	ft_exec(t_tokens token, char **env, int *rexit, int saveout)
 		ft_child_exec(token.args[0], token.args, env, saveout);
 	else
 	{
+		signal(SIGINT, ft_void);
+		signal(SIGQUIT, ft_void);
 		wait(&status);
 		if (WIFEXITED(status))
 		{
 			if (rexit)
 				*rexit = WEXITSTATUS(status);
 		}
+		signal(SIGINT, ft_handler);
+		signal(SIGQUIT, ft_handler);
 	}
 }

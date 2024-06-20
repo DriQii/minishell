@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:29 by evella            #+#    #+#             */
-/*   Updated: 2024/06/06 16:50:33 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/20 14:00:40 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ static int	ft_check_args_exit(char *arg)
 	return (0);
 }
 
-long long	ft_exit(char **args, int *rexit)
+unsigned long long	ft_exit(char **args, unsigned int *rexit)
 {
-	long long	n;
+	unsigned long long	n;
 
 	n = 0;
 	if (!args[1])
-		return (0);
+		return (printf("exit\n"), 0);
 	if (args[1] && !args[2])
 	{
 		if (ft_check_args_exit(args[1]) == 1)
-			return (printf("exit: %s: numeric argument required\n", args[1]),
+			return (printf("exit\nbash: exit: %s: numeric argument required\n", args[1]),
 				*rexit = 2, 2);
 		else
 		{
@@ -50,6 +50,7 @@ long long	ft_exit(char **args, int *rexit)
 		*rexit = 1;
 		return (-1);
 	}
-	*rexit = (int)n;
+	printf("exit\n");
+	*rexit = n;
 	return (n);
 }

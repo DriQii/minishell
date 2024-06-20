@@ -49,7 +49,7 @@ $(NAME) :   $(OBJS)
 	@printf "$(BLUE) > Libft Compilation ...\n$(END)"
 	@$(MAKE) -C libft
 	@printf "$(ERASE)$(GREEN)Libft made !\n$(END)"
-	@$(CC) $(OBJS) $(CFLAGS)  -L./libft/ -lft -I$(brew --prefix readline)/include -L$(brew --prefix readline)/lib -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -L./libft/ -lft -I$(brew --prefix readline)/include -L$(brew --prefix readline)/lib -lreadline -o $(NAME)
 	@printf "$(ERASE)$(GREEN)Minishell made !\n$(END)"
 
 clean   :

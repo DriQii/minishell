@@ -6,7 +6,7 @@
 /*   By: evella <enzovella6603@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:26:39 by evella            #+#    #+#             */
-/*   Updated: 2024/06/19 15:09:52 by evella           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:07:54 by evella           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ char	*ft_swap_var(char *str, char **env, int *rexit)
 		ft_change_agstate_2(ft_find_cstate_2(str[index.i], str[index.i + 1]),
 			&strstate);
 		if (str[index.i] == '$' && strstate != QUOTE 
-			&& str[index.i + 1] && str[index.i + 1] != '\"' && str[index.i + 1] != '\'')
+			&& str[index.i + 1] && str[index.i + 1] != '\"' 
+			&& str[index.i + 1] != '\'' && str[index.i + 1] != ' ')
 		{
 			var.var = ft_get_var(str, &index, env, rexit);
 			if (var.var)

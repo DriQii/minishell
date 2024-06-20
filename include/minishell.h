@@ -127,7 +127,7 @@ void		ft_cd(char **args, int saveout, int *rexit);
 void		ft_echo(t_tokens token);
 char		**ft_unset(char *varname, char **env);
 char		**ft_export(char *var_to_create, char **var_tab);
-long long	ft_exit(char **args, int *rexit);
+unsigned long long	ft_exit(char **args, unsigned int *rexit);
 
 // BUILTINS.UTILS
 
@@ -181,6 +181,7 @@ void		ft_print_tokens(t_tokens *tokens);
 void		ft_printtabtab(char **tb);
 void		*ft_freetabtab(char **tb);
 void		ft_clear(char **env);
+void		ft_handler(int sig);
 char		*ft_realloc(char *str);
 char		**ft_tb_realloc(char **tb);
 
